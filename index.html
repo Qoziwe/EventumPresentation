@@ -76,10 +76,11 @@
       .orb {
         position: absolute;
         border-radius: 50%;
-        filter: blur(130px); /* Maximum smoothness */
-        opacity: 0.5;
+        filter: blur(70px);
+        opacity: 0.45;
         mix-blend-mode: screen;
-        will-change: transform, opacity;
+        will-change: transform;
+        transform: translateZ(0);
       }
 
 
@@ -119,20 +120,17 @@
         justify-content: center;
         opacity: 0;
         pointer-events: none;
-        transform: translateZ(-100px);
-        filter: blur(20px);
-        transition: opacity 0.6s ease;
+        transform: translateZ(0);
+        transition: opacity 0.5s ease;
       }
 
       .slide.active {
         opacity: 1;
         pointer-events: auto;
-        transform: translateZ(0);
-        filter: blur(0);
         z-index: 5;
       }
 
-      /* --- iOS 26 LIQUID GLASS --- */
+      /* --- Glass Panels (perf-optimized) --- */
       .glass-panel {
         position: relative;
         background: linear-gradient(
@@ -142,10 +140,8 @@
           rgba(255, 255, 255, 0.04) 60%,
           rgba(255, 255, 255, 0.01) 100%
         );
-        backdrop-filter: blur(var(--blur-strength)) saturate(180%)
-          brightness(1.1);
-        -webkit-backdrop-filter: blur(var(--blur-strength)) saturate(180%)
-          brightness(1.1);
+        backdrop-filter: blur(12px) saturate(150%);
+        -webkit-backdrop-filter: blur(12px) saturate(150%);
         border: 1px solid var(--glass-border);
         border-radius: 24px;
         padding: 32px;
@@ -153,13 +149,8 @@
         isolation: isolate;
         box-shadow:
           0 8px 32px rgba(0, 0, 0, 0.3),
-          0 1px 0 rgba(255, 255, 255, 0.15) inset,
-          0 -1px 0 rgba(255, 255, 255, 0.05) inset;
-        transition:
-          transform 0.6s var(--ease-liquid),
-          box-shadow 0.6s var(--ease-liquid),
-          border-color 0.4s;
-        will-change: transform, box-shadow;
+          0 1px 0 rgba(255, 255, 255, 0.15) inset;
+        will-change: auto;
       }
 
       /* Specular highlight layer */
@@ -553,7 +544,12 @@
         text-transform: uppercase;
         box-shadow: 0 8px 32px rgba(0,0,0,0.35), 0 1px 0 rgba(255,255,255,0.12) inset;
         animation: qrFloat 5s ease-in-out infinite;
-        transition: border-color 0.3s, box-shadow 0.3s;
+        transition: border-color 0.3s, box-shadow 0.3s, opacity 0.5s ease, transform 0.5s ease;
+      }
+      .qr-widget.hidden {
+        opacity: 0;
+        pointer-events: none;
+        transform: translateY(-20px);
       }
       .qr-widget img {
         border-radius: 10px;
@@ -611,85 +607,7 @@
     </style>
   </head>
   <body>
-    <!-- SVG FILTERS FOR LIQUID GLASS EFFECT -->
-    <svg style="display: none" width="0" height="0">
-      <defs>
-        <!-- Background liquid distortion -->
-        <filter id="liquidSVG">
-          <feTurbulence
-            baseFrequency="0.01"
-            numOctaves="1"
-            type="fractalNoise"
-            result="turbulence"
-            seed="2"
-          />
-          <feDisplacementMap
-            in="SourceGraphic"
-            in2="turbulence"
-            scale="25"
-            xChannelSelector="R"
-            yChannelSelector="G"
-          />
-        </filter>
-
-        <!-- Glass panel refraction filter -->
-        <filter id="glassRefraction" x="-5%" y="-5%" width="110%" height="110%">
-          <feGaussianBlur
-            in="SourceGraphic"
-            stdDeviation="0.5"
-            result="blurred"
-          />
-          <feTurbulence
-            type="fractalNoise"
-            baseFrequency="0.015 0.02"
-            numOctaves="1"
-            seed="5"
-            result="noise"
-          />
-          <feDisplacementMap
-            in="blurred"
-            in2="noise"
-            scale="3"
-            xChannelSelector="R"
-            yChannelSelector="G"
-            result="refracted"
-          />
-          <feSpecularLighting
-            in="noise"
-            surfaceScale="2"
-            specularConstant="0.8"
-            specularExponent="25"
-            result="specular"
-          >
-            <fePointLight x="200" y="100" z="300" />
-          </feSpecularLighting>
-          <feComposite
-            in="specular"
-            in2="refracted"
-            operator="arithmetic"
-            k1="0"
-            k2="1"
-            k3="0.12"
-            k4="0"
-            result="lit"
-          />
-          <feComposite in="lit" in2="SourceGraphic" operator="in" />
-        </filter>
-
-        <!-- Chromatic aberration filter -->
-        <filter
-          id="chromaticAberration"
-          x="-2%"
-          y="-2%"
-          width="104%"
-          height="104%"
-        >
-          <feOffset in="SourceGraphic" dx="1" dy="0" result="red" />
-          <feOffset in="SourceGraphic" dx="-1" dy="0" result="blue" />
-          <feBlend in="red" in2="blue" mode="screen" />
-        </filter>
-      </defs>
-    </svg>
+    <!-- SVG filters removed for performance -->
 
     <!-- BACKGROUND LAYERS -->
     <div class="ambient-canvas">
@@ -1052,7 +970,7 @@
                   >BEYOND TICKETS:</strong
                 >
                 <span style="font-size: 15px; opacity: 0.9"
-                  >Продаем не билет, а сообщества по интересам.</span
+                  >Предоставляем не только билеты но и целые сообщества.</span
                 >
               </li>
             </ul>
@@ -1333,7 +1251,7 @@
             </div>
             <p style="font-size: 18px">Самая низкая на рынке.</p>
             <p style="font-size: 15px; opacity: 0.8; margin-top: 20px">
-              При полном охвате рынка потенциал: 150 млн ₸ / мес.
+              При полном охвате рынка потенциал: 35.5 млн ₸ / мес.
             </p>
           </div>
 
@@ -1452,23 +1370,50 @@
       </section>
 
       <!-- SLIDE 8: INTERFACE -->
-      <section class="slide">
-        <h2>Интерфейс приложения</h2>
-        <div
-          style="
-            width: 100%;
-            height: 60vh;
-            border: 2px dashed rgba(255, 255, 255, 0.1);
-            border-radius: 20px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background: rgba(0, 0, 0, 0.2);
-          "
-        >
-          <span style="letter-spacing: 5px; opacity: 0.3; font-size: 12px"
-            >[ DEMO PREVIEW ]</span
-          >
+      <section class="slide" style="padding: 0; justify-content: center; align-items: center;">
+        <!-- YouTube-style: blurred bg + sharp vertical video -->
+        <div style="
+          position: relative;
+          width: 100%;
+          height: 100%;
+          overflow: hidden;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          background: #000;
+        ">
+          <!-- Blurred background (the YouTube backdrop effect) -->
+          <video
+            src="./video/evntvd.mp4"
+            autoplay muted loop playsinline
+            style="
+              position: absolute;
+              inset: 0;
+              width: 100%;
+              height: 100%;
+              object-fit: cover;
+              transform: scale(1.1);
+              filter: blur(28px) brightness(0.45) saturate(1.4);
+              z-index: 0;
+            "
+          ></video>
+
+          <!-- Foreground: vertical video, full height, centered -->
+          <video
+            src="./video/evntvd.mp4"
+            autoplay muted loop playsinline
+            style="
+              position: relative;
+              z-index: 1;
+              height: 100%;
+              width: auto;
+              max-width: 100%;
+              object-fit: contain;
+              border-radius: 0;
+              display: block;
+              box-shadow: 0 0 80px rgba(0,0,0,0.8);
+            "
+          ></video>
         </div>
       </section>
 
@@ -1977,6 +1922,8 @@
         });
       }
       initTimeline();
+      // Hide QR initially
+      document.querySelector(".qr-widget").classList.add("hidden");
 
       // --- SLIDE COLOR PALETTES FOR SMOOTH BACKGROUND TRANSITIONS ---
       const slideColors = [
@@ -2040,79 +1987,39 @@
         return { h: h * 360, s: s * 100, l: l * 100 };
       }
 
-      let colorCycleInterval = null;
-      let cycleStep = 0;
-
+      // --- BACKGROUND COLOR TRANSITION (slide change only, no interval) ---
       function transitionBackgroundColors(slideIndex) {
         const colors = slideColors[slideIndex] || slideColors[0];
         state.orbs.forEach((orb, i) => {
           const color = colors[i % colors.length];
           gsap.to(orb, {
             background: `radial-gradient(circle, ${color}, transparent 65%)`,
-            duration: 1.8,
+            duration: 2.0,
             ease: "power2.inOut",
           });
         });
-        // Start continuous cycling for this slide
-        startColorCycling(slideIndex);
       }
 
-      function startColorCycling(slideIndex) {
-        if (colorCycleInterval) clearInterval(colorCycleInterval);
-        cycleStep = 0;
+      // Set initial orb colors
+      transitionBackgroundColors(0);
 
-        colorCycleInterval = setInterval(() => {
-          cycleStep++;
-          const baseColors = slideColors[slideIndex] || slideColors[0];
-
-          state.orbs.forEach((orb, i) => {
-            const base = hexToHSL(baseColors[i % baseColors.length]);
-            // Shift hue smoothly over time, each orb at different phase
-            const hueShift = Math.sin(cycleStep * 0.4 + i * 1.3) * 30;
-            const satShift = Math.sin(cycleStep * 0.3 + i * 0.9) * 10;
-            const lightShift = Math.sin(cycleStep * 0.2 + i * 1.7) * 5;
-            const newH = (((base.h + hueShift) % 360) + 360) % 360;
-            const newS = Math.max(30, Math.min(100, base.s + satShift));
-            const newL = Math.max(20, Math.min(70, base.l + lightShift));
-
-            gsap.to(orb, {
-              background: `radial-gradient(circle, hsl(${newH}, ${newS}%, ${newL}%), transparent 65%)`,
-              duration: 3.5,
-              ease: "sine.inOut",
-            });
-          });
-        }, 4000);
-      }
-
-      // Start cycling on first slide immediately
-      startColorCycling(0);
-
-      // --- SMOOTH BACKGROUND ENGINE ---
+      // --- SLOW DRIFT (low-frequency, GPU-only transform) ---
       function animateBackground(warp = false) {
         state.orbs.forEach((orb, i) => {
-          const x = (Math.random() - 0.5) * 30;
-          const y = (Math.random() - 0.5) * 30;
-
+          const x = (Math.random() - 0.5) * 20;
+          const y = (Math.random() - 0.5) * 20;
           if (warp) {
             gsap.to(orb, {
-              x: x * 2 + "%",
-              y: y * 2 + "%",
-              scale: 1.3,
-              duration: 0.8,
+              x: x * 1.5 + "%",
+              y: y * 1.5 + "%",
+              duration: 1.0,
               ease: "power2.inOut",
-              onComplete: () => {
-                gsap.to(orb, {
-                  scale: 1,
-                  duration: 2,
-                  ease: "power2.out",
-                });
-              },
             });
           } else {
             gsap.to(orb, {
               x: x + "%",
               y: y + "%",
-              duration: 15 + Math.random() * 10,
+              duration: 20 + i * 5,
               repeat: -1,
               yoyo: true,
               ease: "sine.inOut",
@@ -2130,6 +2037,14 @@
         const currentSlide = slides[state.current];
         const nextSlide = slides[index];
 
+        // Hide QR on cover slide (index 0), show on others
+        const qrWidget = document.querySelector(".qr-widget");
+        if (index === 0) {
+            qrWidget.classList.add("hidden");
+        } else {
+            qrWidget.classList.remove("hidden");
+        }
+
         animateBackground(true);
         transitionBackgroundColors(index);
 
@@ -2141,19 +2056,31 @@
         const tl = gsap.timeline({
           onComplete: () => {
             currentSlide.classList.remove("active");
+            // Pause video on inactive slide (cleanup)
+            currentSlide.querySelectorAll("video").forEach(v => v.pause());
             state.current = index;
             state.isAnimating = false;
           },
         });
 
+        // --- VIDEO LOGIC: RESET & PLAY IMMEDIATELY ---
+        // This ensures the video is ready and playing from 0:00 as soon as the slide starts fading in
+        nextSlide.querySelectorAll("video").forEach(v => {
+            v.currentTime = 0;
+            v.load(); // Force reload to ensure frame 0 is ready
+            var playPromise = v.play();
+            if (playPromise !== undefined) {
+                playPromise.catch(_ => { /* Auto-play prevented */ });
+            }
+        });
+
+        // Fade out without expensive filter:blur
         tl.to(
           currentSlide,
           {
             opacity: 0,
-            z: -300,
-            filter: "blur(40px)",
-            duration: 0.9,
-            ease: "power3.inOut",
+            duration: 0.5,
+            ease: "power2.in",
           },
           0,
         );
@@ -2161,19 +2088,13 @@
         nextSlide.classList.add("active");
         tl.fromTo(
           nextSlide,
-          {
-            opacity: 0,
-            z: 150,
-            filter: "blur(40px)",
-          },
+          { opacity: 0 },
           {
             opacity: 1,
-            z: 0,
-            filter: "blur(0px)",
-            duration: 1.1,
-            ease: "power3.out",
+            duration: 0.6,
+            ease: "power2.out",
           },
-          0.1,
+          0.3,
         );
 
         const children = nextSlide.querySelectorAll(
@@ -2182,15 +2103,15 @@
         if (children.length) {
           tl.fromTo(
             children,
-            { y: 30, opacity: 0 },
+            { y: 20, opacity: 0 },
             {
               y: 0,
               opacity: 1,
-              stagger: 0.05,
-              duration: 0.8,
+              stagger: 0.04,
+              duration: 0.5,
               ease: "power2.out",
             },
-            0.4,
+            0.35,
           );
         }
       }
