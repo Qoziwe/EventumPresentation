@@ -14,6 +14,7 @@
       rel="stylesheet"
     />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
 
     <style>
       :root {
@@ -604,6 +605,214 @@
         }
       }
 
+      /* --- SECURITY SLIDE COMPONENT --- */
+      .security-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 16px;
+        width: 100%;
+        max-width: 1200px;
+        margin: 0 auto;
+      }
+      .security-card {
+        padding: 20px;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        transition: transform 0.3s var(--ease-silk), border-color 0.3s;
+      }
+      .security-card:hover {
+        transform: translateY(-5px);
+        border-color: var(--accent-blue);
+      }
+      .security-icon {
+        width: 40px;
+        height: 40px;
+        padding: 8px;
+        background: rgba(59, 130, 246, 0.1);
+        border-radius: 10px;
+        color: var(--accent-blue);
+        margin-bottom: 4px;
+      }
+      .security-card h3 {
+        font-size: 1.1rem;
+        font-weight: 700;
+        margin-bottom: 0;
+      }
+      .security-card p {
+        font-size: 0.85rem;
+        line-height: 1.5;
+        margin: 0;
+        opacity: 0.85;
+      }
+      .ai-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        padding: 4px 10px;
+        background: rgba(190, 242, 100, 0.1);
+        border: 1px solid rgba(190, 242, 100, 0.3);
+        border-radius: 100px;
+        color: var(--accent-lime);
+        font-size: 11px;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        margin-bottom: 8px;
+        width: fit-content;
+      }
+      .ai-badge i {
+        width: 12px;
+        height: 12px;
+      }
+
+      @media (max-width: 1024px) {
+        .security-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+
+      /* --- AUDIENCE SLIDE --- */
+      .audience-layout {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 24px;
+        width: 100%;
+        max-width: 1200px;
+        margin: 0 auto;
+      }
+      .persona-card {
+        padding: 30px;
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+        min-height: 520px;
+        border-radius: 24px;
+        position: relative;
+        overflow: hidden;
+      }
+      .persona-header {
+        display: flex;
+        align-items: center;
+        gap: 16px;
+        margin-bottom: 8px;
+      }
+      .persona-avatar {
+        width: 56px;
+        height: 56px;
+        border-radius: 50%;
+        background: rgba(255,255,255,0.1);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border: 2px solid rgba(255,255,255,0.1);
+      }
+      .persona-info h3 {
+        font-size: 1.5rem;
+        margin: 0;
+      }
+      .persona-info span {
+        font-size: 0.9rem;
+        opacity: 0.6;
+      }
+      .audience-section-title {
+        font-size: 0.7rem;
+        font-weight: 800;
+        text-transform: uppercase;
+        letter-spacing: 1.5px;
+        margin-bottom: 12px;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        opacity: 0.6;
+      }
+      .audience-list {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+      }
+      .audience-list li {
+        display: flex;
+        align-items: flex-start;
+        gap: 12px;
+        font-size: 0.9rem;
+        line-height: 1.4;
+      }
+      .audience-list li i {
+        width: 16px;
+        height: 16px;
+        margin-top: 3px;
+        flex-shrink: 0;
+      }
+      
+      /* Pain Level Indicator */
+      .pain-level-wrapper {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        width: 100%;
+      }
+      .pain-level-container {
+        flex-grow: 1;
+        height: 4px;
+        background: rgba(255,255,255,0.05);
+        border-radius: 2px;
+        overflow: hidden;
+      }
+      .pain-level-fill {
+        height: 100%;
+        border-radius: 2px;
+      }
+
+      /* Value Widget */
+      .value-widget {
+        margin-top: auto;
+        padding: 16px;
+        border-radius: 16px;
+        background: rgba(255,255,255,0.03);
+        border: 1px solid rgba(255,255,255,0.1);
+        position: relative;
+      }
+      .value-widget::before {
+        content: "";
+        position: absolute;
+        inset: -1px;
+        border-radius: 17px;
+        padding: 1px;
+        background: linear-gradient(90deg, transparent, var(--persona-accent), transparent);
+        -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+        mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+        -webkit-mask-composite: xor;
+        mask-composite: exclude;
+      }
+      .value-widget h4 {
+        font-size: 0.7rem;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        margin-bottom: 6px;
+        opacity: 0.5;
+        color: var(--persona-accent);
+      }
+      .value-widget p {
+        font-size: 0.95rem;
+        font-weight: 600;
+        color: #fff;
+        margin: 0;
+        line-height: 1.3;
+      }
+
+      @media (max-width: 1024px) {
+        .audience-layout {
+          grid-template-columns: 1fr;
+        }
+        .persona-card {
+          min-height: auto;
+        }
+      }
+
     </style>
   </head>
   <body>
@@ -1125,28 +1334,112 @@
         </div>
       </section>
 
-      <!-- SLIDE 5: MARKET -->
+      <!-- SLIDE 6: TARGET AUDIENCE -->
+      <section class="slide">
+        <span class="subtitle">Кто использует Eventum?</span>
+        <h2>Решаем боли обеих сторон рынка</h2>
+
+        <div class="audience-layout">
+          <!-- Persona 1: Alexei -->
+          <div class="glass-panel persona-card" style="--persona-accent: #8b5cf6;">
+            <div class="persona-header">
+              <div class="persona-avatar" style="border-color: #8b5cf6;"><i data-lucide="user"></i></div>
+              <div class="persona-info">
+                <h3>Алексей</h3>
+                <span>19 лет, Студент</span>
+              </div>
+            </div>
+
+            <div>
+              <div class="audience-section-title" style="color: #ef4444;"><i data-lucide="alert-circle"></i> Проблемы</div>
+              <ul class="audience-list">
+                <li><i data-lucide="info" style="color: #ef4444;"></i> Спам и реклама</li>
+                <li><i data-lucide="user-x" style="color: #ef4444;"></i> Не с кем пойти</li>
+                <li><i data-lucide="file-warning" style="color: #ef4444;"></i> Сложная/долгая оплата</li>
+              </ul>
+              <div class="pain-level-wrapper" style="margin-top: 8px;">
+                <span style="font-size: 10px; opacity: 0.5;">УРОВЕНЬ БОЛИ</span>
+                <div class="pain-level-container"><div class="pain-level-fill" style="width: 85%; background: #ef4444;"></div></div>
+              </div>
+            </div>
+
+            <div>
+              <div class="audience-section-title" style="color: #8b5cf6;"><i data-lucide="target"></i> Потребности</div>
+              <ul class="audience-list">
+                <li><i data-lucide="layout-grid"></i> Платформа 3 в 1</li>
+                <li><i data-lucide="sparkles"></i> Личная лента</li>
+                <li><i data-lucide="users"></i> Найти компанию</li>
+              </ul>
+            </div>
+
+            <div class="value-widget">
+              <h4>ЦЕННОСТЬ</h4>
+              <p>«Сокращение от «хочу пойти» до «билет в кармане» в 5 раз»</p>
+            </div>
+          </div>
+
+          <!-- Persona 2: Dmitry -->
+          <div class="glass-panel persona-card" style="--persona-accent: #06b6d4;">
+            <div class="persona-header">
+              <div class="persona-avatar" style="border-color: #06b6d4;"><i data-lucide="briefcase"></i></div>
+              <div class="persona-info">
+                <h3>Дмитрий</h3>
+                <span>27 лет, Организатор</span>
+              </div>
+            </div>
+
+            <div>
+              <div class="audience-section-title" style="color: #ef4444;"><i data-lucide="alert-circle"></i> Проблемы</div>
+              <ul class="audience-list">
+                <li><i data-lucide="trending-down" style="color: #ef4444;"></i> Нулевой охват без вложений</li>
+                <li><i data-lucide="clock" style="color: #ef4444;"></i> Сложное размещение</li>
+                <li><i data-lucide="bar-chart-2" style="color: #ef4444;"></i> Неподъемное привлечение/продвижение</li>
+              </ul>
+              <div class="pain-level-wrapper" style="margin-top: 8px;">
+                <span style="font-size: 10px; opacity: 0.5;">УРОВЕНЬ БОЛИ</span>
+                <div class="pain-level-container"><div class="pain-level-fill" style="width: 92%; background: #ef4444;"></div></div>
+              </div>
+            </div>
+
+            <div>
+              <div class="audience-section-title" style="color: #06b6d4;"><i data-lucide="rocket"></i> Потребности</div>
+              <ul class="audience-list">
+                <li><i data-lucide="users"></i> Доступ к горячей аудитории</li>
+                <li><i data-lucide="refresh-cw"></i> Автоматизация продаж 24/7</li>
+                <li><i data-lucide="database"></i> CRM-инструменты для проверки билетов</li>
+              </ul>
+            </div>
+
+            <div class="value-widget">
+              <h4>ЦЕННОСТЬ</h4>
+              <p>«Повышение конверсии в покупку за счет встроенного эквайринга»</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 7: MARKET -->
       <section class="slide">
         <h2>Потенциал рынка мероприятий Алматы</h2>
         <div class="grid-3">
           <div class="glass-panel">
             <div class="stat-huge">1.03 млн</div>
-            <h3>Целевая аудитория</h3>
-            <p style="font-size: 14px">
+            <h3 style="font-size: 1.1rem">Целевая аудитория</h3>
+            <p style="font-size: 16px">
               Жители Алматы (16–44 лет).<br />Это 45% населения города.
             </p>
           </div>
           <div class="glass-panel">
             <div class="stat-huge">17 млрд ₸</div>
-            <h3>Объем трат (TAM)</h3>
-            <p style="font-size: 14px">
+            <h3 style="font-size: 1.1rem">Объем трат (TAM)</h3>
+            <p style="font-size: 16px">
               Рынок развлечений вырос на 128% по сравнению с 2023 годом.
             </p>
           </div>
           <div class="glass-panel">
             <div class="stat-huge">14,5 тыс+</div>
-            <h3>Мероприятий</h3>
-            <p style="font-size: 14px">
+            <h3 style="font-size: 1.1rem">Мероприятий</h3>
+            <p style="font-size: 16px">
               Ежегодное количество ивентов. Растет число нишевых и локальных
               событий.
             </p>
@@ -1155,12 +1448,11 @@
 
         <div class="glass-panel market-total">
           <div>
-            <h3 style="color: var(--accent-blue)">
+            <h3 style="color: var(--accent-blue); font-size: 2rem; margin-bottom: 12px;">
               Almaty Total Monthly Capacity
             </h3>
-            <p style="font-size: 16px; opacity: 0.8">
-              Это потенциальный объем всего рынка в месяц (если каждый житель
-              сходит на 2 ивента).
+            <p style="font-size: 18px; opacity: 0.8">
+              Это потенциальный объем всего рынка в месяц.
             </p>
           </div>
           <div
@@ -1239,7 +1531,7 @@
               justify-content: center;
             "
           >
-            <h3 style="color: var(--accent-blue)">Комиссия</h3>
+            <h2 style="font-size: 2.5rem; color: var(--accent-blue); margin-bottom: 24px;">Чистая комиссия</h2>
             <div
               style="
                 font-size: 90px;
@@ -1249,8 +1541,8 @@
             >
               2.5%
             </div>
-            <p style="font-size: 18px">Самая низкая на рынке.</p>
-            <p style="font-size: 15px; opacity: 0.8; margin-top: 20px">
+            <p style="font-size: 22px">Самая низкая на рынке.</p>
+            <p style="font-size: 18px; opacity: 0.8; margin-top: 20px">
               При полном охвате рынка потенциал: 35.5 млн ₸ / мес.
             </p>
           </div>
@@ -1261,17 +1553,17 @@
               class="glass-panel tier-item"
               style="padding: 20px; border: 1px solid rgba(255, 255, 255, 0.15)"
             >
-              <div style="font-size: 15px; color: #888; letter-spacing: 1px">
+              <div style="font-size: 18px; color: #888; letter-spacing: 1px">
                 TIER 0
               </div>
-              <h3 style="font-size: 22px; margin-top: 10px">Entry Point</h3>
+              <h3 style="font-size: 28px; margin-top: 10px">Entry Point</h3>
               <div
                 class="price"
-                style="font-size: 30px; color: var(--text-muted)"
+                style="font-size: 36px; color: var(--text-muted)"
               >
                 Free
               </div>
-              <div class="tier-desc" style="font-size: 16px; margin-top: 15px">
+              <div class="tier-desc" style="font-size: 19px; margin-top: 15px">
                 Ограниченный редактор, но базовый минимум.
               </div>
             </div>
@@ -1280,17 +1572,17 @@
               class="glass-panel tier-item"
               style="padding: 20px; border: 1px solid rgba(255, 255, 255, 0.15)"
             >
-              <div style="font-size: 15px; color: #888; letter-spacing: 1px">
+              <div style="font-size: 18px; color: #888; letter-spacing: 1px">
                 TIER 1
               </div>
-              <h3 style="font-size: 22px; margin-top: 10px">Start</h3>
+              <h3 style="font-size: 28px; margin-top: 10px">Start</h3>
               <div
                 class="price"
-                style="font-size: 30px; color: var(--accent-blue)"
+                style="font-size: 36px; color: var(--accent-blue)"
               >
                 5k ₸
               </div>
-              <div class="tier-desc" style="font-size: 16px; margin-top: 15px">
+              <div class="tier-desc" style="font-size: 19px; margin-top: 15px">
                 Нужные доп. инструменты — дёшево. +Слоты ивентов, поднятие над
                 Entry.
               </div>
@@ -1300,17 +1592,17 @@
               class="glass-panel tier-item"
               style="padding: 20px; border: 1px solid rgba(255, 255, 255, 0.15)"
             >
-              <div style="font-size: 15px; color: #888; letter-spacing: 1px">
+              <div style="font-size: 18px; color: #888; letter-spacing: 1px">
                 TIER 2
               </div>
-              <h3 style="font-size: 22px; margin-top: 10px">Middle</h3>
+              <h3 style="font-size: 28px; margin-top: 10px">Middle</h3>
               <div
                 class="price"
-                style="font-size: 30px; color: var(--accent-cyan)"
+                style="font-size: 36px; color: var(--accent-cyan)"
               >
                 12k ₸
               </div>
-              <div class="tier-desc" style="font-size: 16px; margin-top: 15px">
+              <div class="tier-desc" style="font-size: 19px; margin-top: 15px">
                 Бюджетное продвижение. Подходит для постоянных организаторов.
               </div>
             </div>
@@ -1321,21 +1613,21 @@
             >
               <div
                 style="
-                  font-size: 15px;
+                  font-size: 18px;
                   color: var(--accent-gold);
                   letter-spacing: 1px;
                 "
               >
                 TIER 3
               </div>
-              <h3 style="font-size: 22px; margin-top: 10px">Efficient</h3>
+              <h3 style="font-size: 28px; margin-top: 10px">Efficient</h3>
               <div
                 class="price"
-                style="font-size: 30px; color: var(--accent-gold)"
+                style="font-size: 36px; color: var(--accent-gold)"
               >
                 30k ₸
               </div>
-              <div class="tier-desc" style="font-size: 16px; margin-top: 15px">
+              <div class="tier-desc" style="font-size: 19px; margin-top: 15px">
                 Ваши планы — наша поддержка. Всё легче с Eventum AI assistant.
               </div>
             </div>
@@ -1344,23 +1636,23 @@
               class="glass-panel tier-item"
               style="padding: 20px; border: 1px solid rgba(255, 255, 255, 0.15)"
             >
-              <div style="font-size: 15px; color: #888; letter-spacing: 1px">
+              <div style="font-size: 18px; color: #888; letter-spacing: 1px">
                 TIER 4
               </div>
-              <h3 style="font-size: 22px; margin-top: 10px">PRO</h3>
+              <h3 style="font-size: 28px; margin-top: 10px">PRO</h3>
               <div
                 class="price"
                 style="
-                  font-size: 26px;
+                  font-size: 32px;
                   color: var(--accent-lime);
                   line-height: 1.2;
                 "
               >
-                150-200k ₸<br /><span style="font-size: 13px; color: #aaa"
+                150-200k ₸<br /><span style="font-size: 16px; color: #aaa"
                   >(договорная)</span
                 >
               </div>
-              <div class="tier-desc" style="font-size: 16px; margin-top: 15px">
+              <div class="tier-desc" style="font-size: 19px; margin-top: 15px">
                 PRO AI-ассистент, личный менеджер, таргет от нашего бренда,
                 приоритет.
               </div>
@@ -1417,7 +1709,59 @@
         </div>
       </section>
 
-      <!-- SLIDE 9: MARKETING -->
+      <!-- SLIDE 9: SECURITY & TRUST -->
+      <section class="slide">
+        <span class="subtitle">Безопасность и доверие</span>
+        <h2>Защита каждого участника</h2>
+        
+        <div class="security-grid">
+          <!-- Item 1 -->
+          <div class="glass-panel security-card">
+            <div class="security-icon"><i data-lucide="users-round"></i></div>
+            <h3>Возрастной фильтр</h3>
+            <p>Подростки общаются только со сверстниками. Взрослые не видят профили несовершеннолетних.</p>
+          </div>
+
+          <!-- Item 2 -->
+          <div class="glass-panel security-card">
+            <div class="ai-badge"><i data-lucide="sparkles"></i> AI Checked</div>
+            <div class="security-icon" style="color: var(--accent-cyan); background: rgba(6, 182, 212, 0.1);"><i data-lucide="shield-check"></i></div>
+            <h3>Умная модерация</h3>
+            <p>ИИ блокирует подозрительные сообщения (деньги, геолокация) и токсичность в реальном времени.</p>
+          </div>
+
+          <!-- Item 3 -->
+          <div class="glass-panel security-card">
+            <div class="security-icon" style="color: #ef4444; background: rgba(239, 68, 68, 0.1);"><i data-lucide="zap"></i></div>
+            <h3>Мгновенная реакция</h3>
+            <p>Одна жалоба — автоматическая заморозка аккаунта до завершения ручной проверки менеджером.</p>
+          </div>
+
+          <!-- Item 4 -->
+          <div class="glass-panel security-card">
+            <div class="security-icon" style="color: var(--accent-gold); background: rgba(251, 191, 36, 0.1);"><i data-lucide="user-check"></i></div>
+            <h3>Верификация</h3>
+            <p>Организаторы обязаны подтверждать личность документами для получения статуса проверенного автора.</p>
+          </div>
+
+          <!-- Item 5 -->
+          <div class="glass-panel security-card">
+            <div class="ai-badge"><i data-lucide="sparkles"></i> AI Checked</div>
+            <div class="security-icon" style="color: var(--accent-violet); background: rgba(139, 92, 246, 0.1);"><i data-lucide="layers"></i></div>
+            <h3>Пре-модерация событий</h3>
+            <p>Двухуровневая проверка (ИИ + ручная проверка менеджером) перед публикацией любого события.</p>
+          </div>
+
+          <!-- Item 6 -->
+          <div class="glass-panel security-card">
+            <div class="security-icon" style="color: var(--accent-lime); background: rgba(190, 242, 100, 0.1);"><i data-lucide="file-text"></i></div>
+            <h3>Правила</h3>
+            <p>Обязательное принятие пользовательского соглашения и правил сообщества для доступа к чатам.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 10: MARKETING -->
       <section class="slide">
         <h2>Маркетинг (Low-Budget)</h2>
         <div class="grid-2">
@@ -1437,7 +1781,7 @@
                 list-style: none;
                 line-height: 2;
                 color: var(--text-muted);
-                font-size: 15px;
+                font-size: 19px;
               "
             >
               <li>• TikTok / Inst Reels: Витрина продукта и Gen Z контент.</li>
@@ -1462,7 +1806,7 @@
                 list-style: none;
                 line-height: 2;
                 color: var(--text-muted);
-                font-size: 15px;
+                font-size: 19px;
               "
             >
               <li>
@@ -1485,28 +1829,28 @@
           "
         >
           <div>
-            <div style="font-size: 18px; color: #666; margin-bottom: 5px">
+            <div style="font-size: 22px; color: #666; margin-bottom: 5px">
               Бюджет/мес
             </div>
-            <div style="font-weight: 700">76 500 ₸</div>
+            <div style="font-weight: 700; font-size: 1.2rem;">76 500 ₸</div>
           </div>
           <div>
-            <div style="font-size: 18px; color: #666; margin-bottom: 5px">
+            <div style="font-size: 22px; color: #666; margin-bottom: 5px">
               CPM
             </div>
-            <div style="font-weight: 700">765 - 1275 ₸</div>
+            <div style="font-weight: 700; font-size: 1.2rem;">765 - 1275 ₸</div>
           </div>
           <div>
-            <div style="font-size: 18px; color: #666; margin-bottom: 5px">
+            <div style="font-size: 22px; color: #666; margin-bottom: 5px">
               Показы/мес
             </div>
-            <div style="font-weight: 700">~100k</div>
+            <div style="font-weight: 700; font-size: 1.2rem;">~100k</div>
           </div>
           <div>
-            <div style="font-size: 18px; color: #666; margin-bottom: 5px">
+            <div style="font-size: 22px; color: #666; margin-bottom: 5px">
               Установки/мес
             </div>
-            <div style="font-weight: 700; color: var(--accent-lime)">
+            <div style="font-weight: 700; color: var(--accent-lime); font-size: 1.2rem;">
               300 - 500
             </div>
           </div>
@@ -1675,12 +2019,12 @@
         <h2>Стратегия Реализации (Roadmap)</h2>
         <div class="roadmap-h">
           <div class="rm-step">
-            <h4 style="color: var(--accent-blue)">0–3 Месяца</h4>
-            <h3>Запуск MVP</h3>
+            <h4 style="color: var(--accent-blue); font-size: 1.1rem;">0–3 Месяца</h4>
+            <h3 style="font-size: 1.5rem;">Запуск MVP</h3>
             <ul
               style="
                 list-style: none;
-                font-size: 13px;
+                font-size: 16px;
                 color: #aaa;
                 margin-top: 10px;
               "
@@ -1695,7 +2039,7 @@
             <ul
               style="
                 list-style: none;
-                font-size: 13px;
+                font-size: 16px;
                 color: #aaa;
                 margin-top: 10px;
               "
@@ -1710,7 +2054,7 @@
             <ul
               style="
                 list-style: none;
-                font-size: 13px;
+                font-size: 16px;
                 color: #aaa;
                 margin-top: 10px;
               "
@@ -1725,7 +2069,7 @@
             <ul
               style="
                 list-style: none;
-                font-size: 13px;
+                font-size: 16px;
                 color: #aaa;
                 margin-top: 10px;
               "
@@ -1902,7 +2246,7 @@
     <script>
       const state = {
         current: 0,
-        total: 14,
+        total: 16,
         isAnimating: false,
         orbs: document.querySelectorAll(".orb"),
       };
@@ -1937,7 +2281,9 @@
         ["#2563eb", "#7c3aed", "#0ea5e9", "#f97316", "#6366f1"],
         // Slide 3: B2B Pain - red/warm
         ["#dc2626", "#f59e0b", "#8b5cf6", "#06b6d4", "#ef4444"],
-        // Slide 4: Market - gold/amber
+        // Slide 4: Target Audience - purple/cyan
+        ["#7c3aed", "#1e1b4b", "#06b6d4", "#1e3a8a", "#4c1d95"],
+        // Slide 5: Market - gold/amber
         ["#f59e0b", "#3b82f6", "#10b981", "#8b5cf6", "#fbbf24"],
         // Slide 5: Competitors - lime/blue
         ["#84cc16", "#3b82f6", "#8b5cf6", "#06b6d4", "#22c55e"],
@@ -1945,7 +2291,9 @@
         ["#06b6d4", "#fbbf24", "#3b82f6", "#8b5cf6", "#0ea5e9"],
         // Slide 7: Interface - violet/pink
         ["#8b5cf6", "#ec4899", "#3b82f6", "#06b6d4", "#a855f7"],
-        // Slide 8: Marketing - green/blue
+        // Slide 8: Security - deep blue/trust
+        ["#1e40af", "#3b82f6", "#1e3a8a", "#0ea5e9", "#1d4ed8"],
+        // Slide 9: Marketing - green/blue
         ["#10b981", "#3b82f6", "#fbbf24", "#8b5cf6", "#14b8a6"],
         // Slide 9: Finance - gold/deep
         ["#fbbf24", "#f59e0b", "#3b82f6", "#8b5cf6", "#eab308"],
@@ -2145,6 +2493,9 @@
         { y: 50, opacity: 0 },
         { y: 0, opacity: 1, stagger: 0.1, duration: 1.2 },
       );
+
+      // Initialize Lucide icons
+      lucide.createIcons();
 
 
     </script>
