@@ -84,8 +84,6 @@
         transform: translateZ(0);
       }
 
-
-
       /* Vignette */
       .vignette {
         position: fixed;
@@ -203,8 +201,6 @@
         transition: opacity 0.6s var(--ease-liquid);
       }
 
-
-
       /* --- TYPOGRAPHY --- */
       h1 {
         font-size: clamp(3rem, 7vw, 6rem);
@@ -230,7 +226,7 @@
       }
 
       .subtitle {
-        font-size: 13px;
+        font-size: 18px;
         font-weight: 600;
         letter-spacing: 3px;
         text-transform: uppercase;
@@ -324,8 +320,6 @@
         box-shadow: 0 0 15px #fff;
         transform: scale(2);
       }
-
-
 
       /* --- GRIDS & COMPONENTS --- */
       .grid-team {
@@ -519,8 +513,13 @@
 
       /* --- FLOATING QR WIDGET --- */
       @keyframes qrFloat {
-        0%, 100% { transform: translateY(0px); }
-        50%       { transform: translateY(-8px); }
+        0%,
+        100% {
+          transform: translateY(0px);
+        }
+        50% {
+          transform: translateY(-8px);
+        }
       }
       .qr-widget {
         position: fixed;
@@ -538,14 +537,20 @@
         border: 1px solid rgba(255, 255, 255, 0.16);
         border-radius: 20px;
         text-decoration: none;
-        color: rgba(255,255,255,0.75);
+        color: rgba(255, 255, 255, 0.75);
         font-size: 11px;
         font-weight: 600;
         letter-spacing: 0.8px;
         text-transform: uppercase;
-        box-shadow: 0 8px 32px rgba(0,0,0,0.35), 0 1px 0 rgba(255,255,255,0.12) inset;
+        box-shadow:
+          0 8px 32px rgba(0, 0, 0, 0.35),
+          0 1px 0 rgba(255, 255, 255, 0.12) inset;
         animation: qrFloat 5s ease-in-out infinite;
-        transition: border-color 0.3s, box-shadow 0.3s, opacity 0.5s ease, transform 0.5s ease;
+        transition:
+          border-color 0.3s,
+          box-shadow 0.3s,
+          opacity 0.5s ease,
+          transform 0.5s ease;
       }
       .qr-widget.hidden {
         opacity: 0;
@@ -619,7 +624,9 @@
         display: flex;
         flex-direction: column;
         gap: 10px;
-        transition: transform 0.3s var(--ease-silk), border-color 0.3s;
+        transition:
+          transform 0.3s var(--ease-silk),
+          border-color 0.3s;
       }
       .security-card:hover {
         transform: translateY(-5px);
@@ -701,11 +708,11 @@
         width: 56px;
         height: 56px;
         border-radius: 50%;
-        background: rgba(255,255,255,0.1);
+        background: rgba(255, 255, 255, 0.1);
         display: flex;
         align-items: center;
         justify-content: center;
-        border: 2px solid rgba(255,255,255,0.1);
+        border: 2px solid rgba(255, 255, 255, 0.1);
       }
       .persona-info h3 {
         font-size: 1.5rem;
@@ -747,7 +754,7 @@
         margin-top: 3px;
         flex-shrink: 0;
       }
-      
+
       /* Pain Level Indicator */
       .pain-level-wrapper {
         display: flex;
@@ -758,7 +765,7 @@
       .pain-level-container {
         flex-grow: 1;
         height: 4px;
-        background: rgba(255,255,255,0.05);
+        background: rgba(255, 255, 255, 0.05);
         border-radius: 2px;
         overflow: hidden;
       }
@@ -772,8 +779,8 @@
         margin-top: auto;
         padding: 16px;
         border-radius: 16px;
-        background: rgba(255,255,255,0.03);
-        border: 1px solid rgba(255,255,255,0.1);
+        background: rgba(255, 255, 255, 0.03);
+        border: 1px solid rgba(255, 255, 255, 0.1);
         position: relative;
       }
       .value-widget::before {
@@ -782,9 +789,18 @@
         inset: -1px;
         border-radius: 17px;
         padding: 1px;
-        background: linear-gradient(90deg, transparent, var(--persona-accent), transparent);
-        -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-        mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+        background: linear-gradient(
+          90deg,
+          transparent,
+          var(--persona-accent),
+          transparent
+        );
+        -webkit-mask:
+          linear-gradient(#fff 0 0) content-box,
+          linear-gradient(#fff 0 0);
+        mask:
+          linear-gradient(#fff 0 0) content-box,
+          linear-gradient(#fff 0 0);
         -webkit-mask-composite: xor;
         mask-composite: exclude;
       }
@@ -813,6 +829,91 @@
         }
       }
 
+      /* --- INTERFACE PHOTO SLIDES --- */
+      .interface-slide {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 30px;
+        padding: 60px 40px 100px;
+      }
+      .interface-slide h2 {
+        margin-bottom: 0;
+      }
+      .interface-slide .slide-description {
+        font-size: 0.95rem;
+        color: var(--text-muted);
+        text-align: center;
+        max-width: 700px;
+        margin-top: -10px;
+      }
+      .phone-gallery {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 28px;
+        flex-wrap: nowrap;
+        width: 100%;
+        max-width: 1400px;
+      }
+      .phone-gallery.four-items {
+        gap: 20px;
+      }
+      .phone-item {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 12px;
+        flex: 1 1 0;
+        max-width: 280px;
+        transition: transform 0.4s var(--ease-silk);
+      }
+      .phone-item:hover {
+        transform: translateY(-8px) scale(1.03);
+      }
+      .phone-frame {
+        width: 100%;
+        max-height: 58vh;
+        border-radius: 20px;
+        overflow: hidden;
+        border: 2px solid rgba(255, 255, 255, 0.12);
+        box-shadow:
+          0 8px 40px rgba(0, 0, 0, 0.5),
+          0 0 0 1px rgba(255, 255, 255, 0.05) inset,
+          0 0 60px rgba(59, 130, 246, 0.08);
+        background: #111;
+        position: relative;
+      }
+      .phone-frame img {
+        width: 100%;
+        height: auto;
+        display: block;
+      }
+      .phone-label {
+        font-size: 0.75rem;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 1.5px;
+        color: rgba(255, 255, 255, 0.5);
+        text-align: center;
+      }
+      .phone-gallery.four-items .phone-item {
+        max-width: 220px;
+      }
+      @media (max-width: 1024px) {
+        .phone-gallery {
+          flex-wrap: wrap;
+          gap: 20px;
+        }
+        .phone-item {
+          max-width: 200px;
+          flex: 0 0 auto;
+        }
+        .phone-gallery.four-items .phone-item {
+          max-width: 160px;
+        }
+      }
     </style>
   </head>
   <body>
@@ -847,7 +948,7 @@
           width: 50vw;
           height: 50vw;
           top: 40%;
-        right: 30%;
+          right: 30%;
         "
       ></div>
     </div>
@@ -1341,9 +1442,14 @@
 
         <div class="audience-layout">
           <!-- Persona 1: Alexei -->
-          <div class="glass-panel persona-card" style="--persona-accent: #8b5cf6;">
+          <div
+            class="glass-panel persona-card"
+            style="--persona-accent: #8b5cf6"
+          >
             <div class="persona-header">
-              <div class="persona-avatar" style="border-color: #8b5cf6;"><i data-lucide="user"></i></div>
+              <div class="persona-avatar" style="border-color: #8b5cf6">
+                <i data-lucide="user"></i>
+              </div>
               <div class="persona-info">
                 <h3>Алексей</h3>
                 <span>19 лет, Студент</span>
@@ -1351,20 +1457,38 @@
             </div>
 
             <div>
-              <div class="audience-section-title" style="color: #ef4444;"><i data-lucide="alert-circle"></i> Проблемы</div>
+              <div class="audience-section-title" style="color: #ef4444">
+                <i data-lucide="alert-circle"></i> Проблемы
+              </div>
               <ul class="audience-list">
-                <li><i data-lucide="info" style="color: #ef4444;"></i> Спам и реклама</li>
-                <li><i data-lucide="user-x" style="color: #ef4444;"></i> Не с кем пойти</li>
-                <li><i data-lucide="file-warning" style="color: #ef4444;"></i> Сложная/долгая оплата</li>
+                <li>
+                  <i data-lucide="info" style="color: #ef4444"></i> Спам и
+                  реклама
+                </li>
+                <li>
+                  <i data-lucide="user-x" style="color: #ef4444"></i> Не с кем
+                  пойти
+                </li>
+                <li>
+                  <i data-lucide="file-warning" style="color: #ef4444"></i>
+                  Сложная/долгая оплата
+                </li>
               </ul>
-              <div class="pain-level-wrapper" style="margin-top: 8px;">
-                <span style="font-size: 10px; opacity: 0.5;">УРОВЕНЬ БОЛИ</span>
-                <div class="pain-level-container"><div class="pain-level-fill" style="width: 85%; background: #ef4444;"></div></div>
+              <div class="pain-level-wrapper" style="margin-top: 8px">
+                <span style="font-size: 10px; opacity: 0.5">УРОВЕНЬ БОЛИ</span>
+                <div class="pain-level-container">
+                  <div
+                    class="pain-level-fill"
+                    style="width: 85%; background: #ef4444"
+                  ></div>
+                </div>
               </div>
             </div>
 
             <div>
-              <div class="audience-section-title" style="color: #8b5cf6;"><i data-lucide="target"></i> Потребности</div>
+              <div class="audience-section-title" style="color: #8b5cf6">
+                <i data-lucide="target"></i> Потребности
+              </div>
               <ul class="audience-list">
                 <li><i data-lucide="layout-grid"></i> Платформа 3 в 1</li>
                 <li><i data-lucide="sparkles"></i> Личная лента</li>
@@ -1379,9 +1503,14 @@
           </div>
 
           <!-- Persona 2: Dmitry -->
-          <div class="glass-panel persona-card" style="--persona-accent: #06b6d4;">
+          <div
+            class="glass-panel persona-card"
+            style="--persona-accent: #06b6d4"
+          >
             <div class="persona-header">
-              <div class="persona-avatar" style="border-color: #06b6d4;"><i data-lucide="briefcase"></i></div>
+              <div class="persona-avatar" style="border-color: #06b6d4">
+                <i data-lucide="briefcase"></i>
+              </div>
               <div class="persona-info">
                 <h3>Дмитрий</h3>
                 <span>27 лет, Организатор</span>
@@ -1389,30 +1518,55 @@
             </div>
 
             <div>
-              <div class="audience-section-title" style="color: #ef4444;"><i data-lucide="alert-circle"></i> Проблемы</div>
+              <div class="audience-section-title" style="color: #ef4444">
+                <i data-lucide="alert-circle"></i> Проблемы
+              </div>
               <ul class="audience-list">
-                <li><i data-lucide="trending-down" style="color: #ef4444;"></i> Нулевой охват без вложений</li>
-                <li><i data-lucide="clock" style="color: #ef4444;"></i> Сложное размещение</li>
-                <li><i data-lucide="bar-chart-2" style="color: #ef4444;"></i> Неподъемное привлечение/продвижение</li>
+                <li>
+                  <i data-lucide="trending-down" style="color: #ef4444"></i>
+                  Нулевой охват без вложений
+                </li>
+                <li>
+                  <i data-lucide="clock" style="color: #ef4444"></i> Сложное
+                  размещение
+                </li>
+                <li>
+                  <i data-lucide="bar-chart-2" style="color: #ef4444"></i>
+                  Неподъемное привлечение/продвижение
+                </li>
               </ul>
-              <div class="pain-level-wrapper" style="margin-top: 8px;">
-                <span style="font-size: 10px; opacity: 0.5;">УРОВЕНЬ БОЛИ</span>
-                <div class="pain-level-container"><div class="pain-level-fill" style="width: 92%; background: #ef4444;"></div></div>
+              <div class="pain-level-wrapper" style="margin-top: 8px">
+                <span style="font-size: 10px; opacity: 0.5">УРОВЕНЬ БОЛИ</span>
+                <div class="pain-level-container">
+                  <div
+                    class="pain-level-fill"
+                    style="width: 92%; background: #ef4444"
+                  ></div>
+                </div>
               </div>
             </div>
 
             <div>
-              <div class="audience-section-title" style="color: #06b6d4;"><i data-lucide="rocket"></i> Потребности</div>
+              <div class="audience-section-title" style="color: #06b6d4">
+                <i data-lucide="rocket"></i> Потребности
+              </div>
               <ul class="audience-list">
                 <li><i data-lucide="users"></i> Доступ к горячей аудитории</li>
-                <li><i data-lucide="refresh-cw"></i> Автоматизация продаж 24/7</li>
-                <li><i data-lucide="database"></i> CRM-инструменты для проверки билетов</li>
+                <li>
+                  <i data-lucide="refresh-cw"></i> Автоматизация продаж 24/7
+                </li>
+                <li>
+                  <i data-lucide="database"></i> CRM-инструменты для проверки
+                  билетов
+                </li>
               </ul>
             </div>
 
             <div class="value-widget">
               <h4>ЦЕННОСТЬ</h4>
-              <p>«Повышение конверсии в покупку за счет встроенного эквайринга»</p>
+              <p>
+                «Повышение конверсии в покупку за счет встроенного эквайринга»
+              </p>
             </div>
           </div>
         </div>
@@ -1448,7 +1602,13 @@
 
         <div class="glass-panel market-total">
           <div>
-            <h3 style="color: var(--accent-blue); font-size: 2rem; margin-bottom: 12px;">
+            <h3
+              style="
+                color: var(--accent-blue);
+                font-size: 2rem;
+                margin-bottom: 12px;
+              "
+            >
               Almaty Total Monthly Capacity
             </h3>
             <p style="font-size: 18px; opacity: 0.8">
@@ -1458,7 +1618,8 @@
           <div
             style="font-size: 48px; font-weight: 700; color: var(--accent-gold)"
           >
-            1.42 млрд/мес <br> 6 млн/год на старте
+            1.42 млрд/мес <br />
+            6 млн/год на старте
           </div>
         </div>
       </section>
@@ -1531,7 +1692,15 @@
               justify-content: center;
             "
           >
-            <h2 style="font-size: 2.5rem; color: var(--accent-blue); margin-bottom: 24px;">Чистая комиссия</h2>
+            <h2
+              style="
+                font-size: 2.5rem;
+                color: var(--accent-blue);
+                margin-bottom: 24px;
+              "
+            >
+              Чистая комиссия
+            </h2>
             <div
               style="
                 font-size: 90px;
@@ -1661,51 +1830,164 @@
         </div>
       </section>
 
-      <!-- SLIDE 8: INTERFACE -->
-      <section class="slide" style="padding: 0; justify-content: center; align-items: center;">
-        <!-- YouTube-style: blurred bg + sharp vertical video -->
-        <div style="
-          position: relative;
-          width: 100%;
-          height: 100%;
-          overflow: hidden;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          background: #000;
-        ">
-          <!-- Blurred background (the YouTube backdrop effect) -->
-          <video
-            src="./video/evntvd.mp4"
-            autoplay muted loop playsinline
-            style="
-              position: absolute;
-              inset: 0;
-              width: 100%;
-              height: 100%;
-              object-fit: cover;
-              transform: scale(1.1);
-              filter: blur(28px) brightness(0.45) saturate(1.4);
-              z-index: 0;
-            "
-          ></video>
+      <!-- SLIDE 8A: INTERFACE — Home & Discovery -->
+      <section class="slide interface-slide">
+        <span class="subtitle">Интерфейс приложения</span>
+        <h2>Главная и Открытие</h2>
+        <p class="slide-description">
+          Персональная лента, популярные события и умный поиск с фильтрами
+        </p>
+        <div class="phone-gallery">
+          <div class="phone-item">
+            <div class="phone-frame">
+              <img
+                src="./photos/interfaceImages/Screenshot_20260225_205914_eventum-mobile.jpg"
+                alt="Лента Для вас"
+              />
+            </div>
+            <span class="phone-label">Лента «Для вас»</span>
+          </div>
+          <div class="phone-item">
+            <div class="phone-frame">
+              <img
+                src="./photos/interfaceImages/Screenshot_20260225_205926_eventum-mobile.jpg"
+                alt="Популярное в городе"
+              />
+            </div>
+            <span class="phone-label">Популярное</span>
+          </div>
+          <div class="phone-item">
+            <div class="phone-frame">
+              <img
+                src="./photos/interfaceImages/Screenshot_20260225_210018_eventum-mobile.jpg"
+                alt="Поиск и фильтры"
+              />
+            </div>
+            <span class="phone-label">Поиск</span>
+          </div>
+        </div>
+      </section>
 
-          <!-- Foreground: vertical video, full height, centered -->
-          <video
-            src="./video/evntvd.mp4"
-            autoplay muted loop playsinline
-            style="
-              position: relative;
-              z-index: 1;
-              height: 100%;
-              width: auto;
-              max-width: 100%;
-              object-fit: contain;
-              border-radius: 0;
-              display: block;
-              box-shadow: 0 0 80px rgba(0,0,0,0.8);
-            "
-          ></video>
+      <!-- SLIDE 8B: INTERFACE — Social Features -->
+      <section class="slide interface-slide">
+        <span class="subtitle">Интерфейс приложения</span>
+        <h2>Социальные функции</h2>
+        <p class="slide-description">
+          Обсуждения, подписки на организаторов и личный профиль
+        </p>
+        <div class="phone-gallery four-items">
+          <div class="phone-item">
+            <div class="phone-frame">
+              <img
+                src="./photos/interfaceImages/Screenshot_20260225_210124_eventum-mobile.jpg"
+                alt="Обсуждения"
+              />
+            </div>
+            <span class="phone-label">Обсуждения</span>
+          </div>
+          <div class="phone-item">
+            <div class="phone-frame">
+              <img
+                src="./photos/interfaceImages/Screenshot_20260225_221228_eventum-mobile.jpg"
+                alt="Мои авторы"
+              />
+            </div>
+            <span class="phone-label">Мои авторы</span>
+          </div>
+          <div class="phone-item">
+            <div class="phone-frame">
+              <img
+                src="./photos/interfaceImages/Screenshot_20260225_221206_eventum-mobile.jpg"
+                alt="Профиль"
+              />
+            </div>
+            <span class="phone-label">Профиль</span>
+          </div>
+          <div class="phone-item">
+            <div class="phone-frame">
+              <img
+                src="./photos/interfaceImages/Screenshot_20260225_221249_eventum-mobile.jpg"
+                alt="Мои билеты"
+              />
+            </div>
+            <span class="phone-label">Мои билеты</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 8C: INTERFACE — Creator Studio -->
+      <section class="slide interface-slide">
+        <span class="subtitle">Интерфейс приложения</span>
+        <h2>Студия организатора</h2>
+        <p class="slide-description">
+          Панель управления, создание событий и аналитика продаж
+        </p>
+        <div class="phone-gallery">
+          <div class="phone-item">
+            <div class="phone-frame">
+              <img
+                src="./photos/interfaceImages/Screenshot_20260225_212024_eventum-mobile.jpg"
+                alt="Creator Studio"
+              />
+            </div>
+            <span class="phone-label">Студия</span>
+          </div>
+          <div class="phone-item">
+            <div class="phone-frame">
+              <img
+                src="./photos/interfaceImages/Screenshot_20260225_212034_eventum-mobile.jpg"
+                alt="Создание мероприятия"
+              />
+            </div>
+            <span class="phone-label">Создание</span>
+          </div>
+          <div class="phone-item">
+            <div class="phone-frame">
+              <img
+                src="./photos/interfaceImages/Screenshot_20260225_212054_eventum-mobile.jpg"
+                alt="Аналитика"
+              />
+            </div>
+            <span class="phone-label">Аналитика</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 8D: INTERFACE — Subscriptions & Settings -->
+      <section class="slide interface-slide">
+        <span class="subtitle">Интерфейс приложения</span>
+        <h2>Подписки и Настройки</h2>
+        <p class="slide-description">
+          Тарифные планы, настройка профиля студии и сохранённые события
+        </p>
+        <div class="phone-gallery">
+          <div class="phone-item">
+            <div class="phone-frame">
+              <img
+                src="./photos/interfaceImages/Screenshot_20260225_212120_eventum-mobile.jpg"
+                alt="Подписки"
+              />
+            </div>
+            <span class="phone-label">Подписки</span>
+          </div>
+          <div class="phone-item">
+            <div class="phone-frame">
+              <img
+                src="./photos/interfaceImages/Screenshot_20260225_212138_eventum-mobile.jpg"
+                alt="Настройки профиля"
+              />
+            </div>
+            <span class="phone-label">Настройки</span>
+          </div>
+          <div class="phone-item">
+            <div class="phone-frame">
+              <img
+                src="./photos/interfaceImages/Screenshot_20260225_221239_eventum-mobile.jpg"
+                alt="Сохранённые"
+              />
+            </div>
+            <span class="phone-label">Сохранённые</span>
+          </div>
         </div>
       </section>
 
@@ -1713,50 +1995,109 @@
       <section class="slide">
         <span class="subtitle">Безопасность и доверие</span>
         <h2>Защита каждого участника</h2>
-        
+
         <div class="security-grid">
           <!-- Item 1 -->
           <div class="glass-panel security-card">
             <div class="security-icon"><i data-lucide="users-round"></i></div>
             <h3>Возрастной фильтр</h3>
-            <p>Подростки общаются только со сверстниками. Взрослые не видят профили несовершеннолетних.</p>
+            <p>
+              Подростки общаются только со сверстниками. Взрослые не видят
+              профили несовершеннолетних.
+            </p>
           </div>
 
           <!-- Item 2 -->
           <div class="glass-panel security-card">
-            <div class="ai-badge"><i data-lucide="sparkles"></i> AI Checked</div>
-            <div class="security-icon" style="color: var(--accent-cyan); background: rgba(6, 182, 212, 0.1);"><i data-lucide="shield-check"></i></div>
-            <h3>Умная модерация</h3>
-            <p>ИИ блокирует подозрительные сообщения (деньги, геолокация) и токсичность в реальном времени.</p>
+            <div class="ai-badge">
+              <i data-lucide="sparkles"></i> AI Checked
+            </div>
+            <div
+              class="security-icon"
+              style="
+                color: var(--accent-cyan);
+                background: rgba(6, 182, 212, 0.1);
+              "
+            >
+              <i data-lucide="shield-check"></i>
+            </div>
+            <h3>Модерация сообщений</h3>
+            <p>
+              ИИ блокирует подозрительные сообщения (деньги, геолокация) и
+              токсичность в реальном времени.
+            </p>
           </div>
 
           <!-- Item 3 -->
           <div class="glass-panel security-card">
-            <div class="security-icon" style="color: #ef4444; background: rgba(239, 68, 68, 0.1);"><i data-lucide="zap"></i></div>
+            <div
+              class="security-icon"
+              style="color: #ef4444; background: rgba(239, 68, 68, 0.1)"
+            >
+              <i data-lucide="zap"></i>
+            </div>
             <h3>Мгновенная реакция</h3>
-            <p>Одна жалоба — автоматическая заморозка аккаунта до завершения ручной проверки менеджером.</p>
+            <p>
+              Пару жалоб — автоматическая заморозка аккаунта до завершения
+              ручной проверки менеджером.
+            </p>
           </div>
 
           <!-- Item 4 -->
           <div class="glass-panel security-card">
-            <div class="security-icon" style="color: var(--accent-gold); background: rgba(251, 191, 36, 0.1);"><i data-lucide="user-check"></i></div>
+            <div
+              class="security-icon"
+              style="
+                color: var(--accent-gold);
+                background: rgba(251, 191, 36, 0.1);
+              "
+            >
+              <i data-lucide="user-check"></i>
+            </div>
             <h3>Верификация</h3>
-            <p>Организаторы обязаны подтверждать личность документами для получения статуса проверенного автора.</p>
+            <p>
+              Организаторы обязаны подтверждать личность документами для
+              получения статуса проверенного автора.
+            </p>
           </div>
 
           <!-- Item 5 -->
           <div class="glass-panel security-card">
-            <div class="ai-badge"><i data-lucide="sparkles"></i> AI Checked</div>
-            <div class="security-icon" style="color: var(--accent-violet); background: rgba(139, 92, 246, 0.1);"><i data-lucide="layers"></i></div>
+            <div class="ai-badge">
+              <i data-lucide="sparkles"></i> AI Checked
+            </div>
+            <div
+              class="security-icon"
+              style="
+                color: var(--accent-violet);
+                background: rgba(139, 92, 246, 0.1);
+              "
+            >
+              <i data-lucide="layers"></i>
+            </div>
             <h3>Пре-модерация событий</h3>
-            <p>Двухуровневая проверка (ИИ + ручная проверка менеджером) перед публикацией любого события.</p>
+            <p>
+              Двухуровневая проверка (ИИ + ручная проверка менеджером) перед
+              публикацией любого события.
+            </p>
           </div>
 
           <!-- Item 6 -->
           <div class="glass-panel security-card">
-            <div class="security-icon" style="color: var(--accent-lime); background: rgba(190, 242, 100, 0.1);"><i data-lucide="file-text"></i></div>
+            <div
+              class="security-icon"
+              style="
+                color: var(--accent-lime);
+                background: rgba(190, 242, 100, 0.1);
+              "
+            >
+              <i data-lucide="file-text"></i>
+            </div>
             <h3>Правила</h3>
-            <p>Обязательное принятие пользовательского соглашения и правил сообщества для доступа к чатам.</p>
+            <p>
+              Обязательное принятие пользовательского соглашения и правил
+              сообщества для доступа к чатам.
+            </p>
           </div>
         </div>
       </section>
@@ -1832,25 +2173,31 @@
             <div style="font-size: 22px; color: #666; margin-bottom: 5px">
               Бюджет/мес
             </div>
-            <div style="font-weight: 700; font-size: 1.2rem;">76 500 ₸</div>
+            <div style="font-weight: 700; font-size: 1.2rem">76 500 ₸</div>
           </div>
           <div>
             <div style="font-size: 22px; color: #666; margin-bottom: 5px">
               CPM
             </div>
-            <div style="font-weight: 700; font-size: 1.2rem;">765 - 1275 ₸</div>
+            <div style="font-weight: 700; font-size: 1.2rem">765 - 1275 ₸</div>
           </div>
           <div>
             <div style="font-size: 22px; color: #666; margin-bottom: 5px">
               Показы/мес
             </div>
-            <div style="font-weight: 700; font-size: 1.2rem;">~100k</div>
+            <div style="font-weight: 700; font-size: 1.2rem">~100k</div>
           </div>
           <div>
             <div style="font-size: 22px; color: #666; margin-bottom: 5px">
               Установки/мес
             </div>
-            <div style="font-weight: 700; color: var(--accent-lime); font-size: 1.2rem;">
+            <div
+              style="
+                font-weight: 700;
+                color: var(--accent-lime);
+                font-size: 1.2rem;
+              "
+            >
               300 - 500
             </div>
           </div>
@@ -2019,8 +2366,10 @@
         <h2>Стратегия Реализации (Roadmap)</h2>
         <div class="roadmap-h">
           <div class="rm-step">
-            <h4 style="color: var(--accent-blue); font-size: 1.1rem;">0–3 Месяца</h4>
-            <h3 style="font-size: 1.5rem;">Запуск MVP</h3>
+            <h4 style="color: var(--accent-blue); font-size: 1.1rem">
+              0–3 Месяца
+            </h4>
+            <h3 style="font-size: 1.5rem">Запуск MVP</h3>
             <ul
               style="
                 list-style: none;
@@ -2246,7 +2595,7 @@
     <script>
       const state = {
         current: 0,
-        total: 16,
+        total: 19,
         isAnimating: false,
         orbs: document.querySelectorAll(".orb"),
       };
@@ -2289,8 +2638,14 @@
         ["#84cc16", "#3b82f6", "#8b5cf6", "#06b6d4", "#22c55e"],
         // Slide 6: Monetization - cyan/gold
         ["#06b6d4", "#fbbf24", "#3b82f6", "#8b5cf6", "#0ea5e9"],
-        // Slide 7: Interface - violet/pink
+        // Slide 7: Interface (Home) - violet/pink
         ["#8b5cf6", "#ec4899", "#3b82f6", "#06b6d4", "#a855f7"],
+        // Slide 7b: Interface (Social) - cyan/violet
+        ["#06b6d4", "#8b5cf6", "#3b82f6", "#ec4899", "#14b8a6"],
+        // Slide 7c: Interface (Creator) - gold/blue
+        ["#fbbf24", "#3b82f6", "#8b5cf6", "#06b6d4", "#f59e0b"],
+        // Slide 7d: Interface (Subscriptions) - lime/cyan
+        ["#bef264", "#06b6d4", "#3b82f6", "#8b5cf6", "#84cc16"],
         // Slide 8: Security - deep blue/trust
         ["#1e40af", "#3b82f6", "#1e3a8a", "#0ea5e9", "#1d4ed8"],
         // Slide 9: Marketing - green/blue
@@ -2388,9 +2743,9 @@
         // Hide QR on cover slide (index 0), show on others
         const qrWidget = document.querySelector(".qr-widget");
         if (index === 0) {
-            qrWidget.classList.add("hidden");
+          qrWidget.classList.add("hidden");
         } else {
-            qrWidget.classList.remove("hidden");
+          qrWidget.classList.remove("hidden");
         }
 
         animateBackground(true);
@@ -2405,7 +2760,7 @@
           onComplete: () => {
             currentSlide.classList.remove("active");
             // Pause video on inactive slide (cleanup)
-            currentSlide.querySelectorAll("video").forEach(v => v.pause());
+            currentSlide.querySelectorAll("video").forEach((v) => v.pause());
             state.current = index;
             state.isAnimating = false;
           },
@@ -2413,13 +2768,15 @@
 
         // --- VIDEO LOGIC: RESET & PLAY IMMEDIATELY ---
         // This ensures the video is ready and playing from 0:00 as soon as the slide starts fading in
-        nextSlide.querySelectorAll("video").forEach(v => {
-            v.currentTime = 0;
-            v.load(); // Force reload to ensure frame 0 is ready
-            var playPromise = v.play();
-            if (playPromise !== undefined) {
-                playPromise.catch(_ => { /* Auto-play prevented */ });
-            }
+        nextSlide.querySelectorAll("video").forEach((v) => {
+          v.currentTime = 0;
+          v.load(); // Force reload to ensure frame 0 is ready
+          var playPromise = v.play();
+          if (playPromise !== undefined) {
+            playPromise.catch((_) => {
+              /* Auto-play prevented */
+            });
+          }
         });
 
         // Fade out without expensive filter:blur
@@ -2485,9 +2842,6 @@
           changeSlide(state.current - 1);
       });
 
-
-
-
       gsap.fromTo(
         ".slide.active > *",
         { y: 50, opacity: 0 },
@@ -2496,8 +2850,6 @@
 
       // Initialize Lucide icons
       lucide.createIcons();
-
-
     </script>
   </body>
 </html>
