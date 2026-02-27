@@ -261,8 +261,8 @@
       .timeline-track {
         position: absolute;
         top: 50%;
-        left: 0;
-        width: 100%;
+        left: 15px;
+        width: calc(100% - 30px);
         height: 2px;
         background: rgba(255, 255, 255, 0.1);
         transform: translateY(-50%);
@@ -272,8 +272,8 @@
       .timeline-progress {
         position: absolute;
         top: 50%;
-        left: 0;
-        width: 0%;
+        left: 15px;
+        width: 0px;
         height: 2px;
         background: linear-gradient(
           90deg,
@@ -639,7 +639,13 @@
         background: rgba(59, 130, 246, 0.1);
         border-radius: 10px;
         color: var(--accent-blue);
-        margin-bottom: 4px;
+      }
+      .security-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        width: 100%;
+        margin-bottom: 8px;
       }
       .security-card h3 {
         font-size: 1.1rem;
@@ -665,7 +671,7 @@
         font-weight: 700;
         text-transform: uppercase;
         letter-spacing: 0.5px;
-        margin-bottom: 8px;
+        margin-bottom: 0;
         width: fit-content;
       }
       .ai-badge i {
@@ -913,6 +919,42 @@
         .phone-gallery.four-items .phone-item {
           max-width: 160px;
         }
+      }
+      /* Instagram QR Styling */
+      .insta-qr-wrapper {
+        margin-top: 40px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 15px;
+      }
+      .insta-qr-container {
+        padding: 12px;
+        background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
+        border-radius: 24px;
+        box-shadow: 0 10px 40px rgba(220, 39, 67, 0.3);
+        position: relative;
+        transition: transform 0.4s var(--ease-silk);
+      }
+      .insta-qr-container:hover {
+        transform: scale(1.05) rotate(2deg);
+      }
+      .insta-qr-container img {
+        display: block;
+        border-radius: 16px;
+        background: white;
+        padding: 8px;
+      }
+      .insta-label {
+        font-size: 0.9rem;
+        font-weight: 700;
+        color: #fff;
+        letter-spacing: 1px;
+        text-transform: uppercase;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        text-shadow: 0 2px 10px rgba(0,0,0,0.5);
       }
     </style>
   </head>
@@ -2009,17 +2051,19 @@
 
           <!-- Item 2 -->
           <div class="glass-panel security-card">
-            <div class="ai-badge">
-              <i data-lucide="sparkles"></i> AI Checked
-            </div>
-            <div
-              class="security-icon"
-              style="
-                color: var(--accent-cyan);
-                background: rgba(6, 182, 212, 0.1);
-              "
-            >
-              <i data-lucide="shield-check"></i>
+            <div class="security-header">
+              <div
+                class="security-icon"
+                style="
+                  color: var(--accent-cyan);
+                  background: rgba(6, 182, 212, 0.1);
+                "
+              >
+                <i data-lucide="shield-check"></i>
+              </div>
+              <div class="ai-badge">
+                <i data-lucide="sparkles"></i> AI Checked
+              </div>
             </div>
             <h3>Модерация сообщений</h3>
             <p>
@@ -2063,17 +2107,19 @@
 
           <!-- Item 5 -->
           <div class="glass-panel security-card">
-            <div class="ai-badge">
-              <i data-lucide="sparkles"></i> AI Checked
-            </div>
-            <div
-              class="security-icon"
-              style="
-                color: var(--accent-violet);
-                background: rgba(139, 92, 246, 0.1);
-              "
-            >
-              <i data-lucide="layers"></i>
+            <div class="security-header">
+              <div
+                class="security-icon"
+                style="
+                  color: var(--accent-violet);
+                  background: rgba(139, 92, 246, 0.1);
+                "
+              >
+                <i data-lucide="layers"></i>
+              </div>
+              <div class="ai-badge">
+                <i data-lucide="sparkles"></i> AI Checked
+              </div>
             </div>
             <h3>Пре-модерация событий</h3>
             <p>
@@ -2671,12 +2717,22 @@
           >
             Мы готовы ответить на ваши вопросы
           </p>
-          <div style="margin-top: 50px">
+          <div class="insta-qr-wrapper">
+            <div class="insta-qr-container">
+              <img src="https://api.qrserver.com/v1/create-qr-code/?size=160x160&bgcolor=ffffff&color=000000&margin=2&data=https://www.instagram.com/eventumtm?igsh=MThxdTV5eWc4Njg1aQ%3D%3D&utm_source=qr" alt="Instagram QR" width="160" height="160">
+            </div>
+            <div class="insta-label">
+              <i data-lucide="instagram"></i>
+              @eventumtm
+            </div>
+          </div>
+
+          <div style="margin-top: 40px">
             <div
               class="glass-panel"
               style="
                 display: inline-block;
-                padding: 20px 40px;
+                padding: 16px 32px;
                 border-radius: 50px;
                 border: 1px solid rgba(255, 255, 255, 0.2);
               "
@@ -2704,14 +2760,15 @@
     </div>
 
     <script>
+      const slides = document.querySelectorAll(".slide");
+
       const state = {
         current: 0,
-        total: 19,
+        total: slides.length,
         isAnimating: false,
         orbs: document.querySelectorAll(".orb"),
       };
 
-      const slides = document.querySelectorAll(".slide");
       const dotsContainer = document.getElementById("dots-container");
       const progressLine = document.getElementById("progress-line");
 
@@ -2867,7 +2924,8 @@
         document
           .querySelectorAll(".t-point")
           .forEach((d, i) => d.classList.toggle("active", i === index));
-        progressLine.style.width = `${(index / (state.total - 1)) * 100}%`;
+        const p = index / Math.max(1, state.total - 1);
+        progressLine.style.width = `calc(${p * 100}% - ${p * 30}px)`;
 
         const tl = gsap.timeline({
           onComplete: () => {
@@ -2892,12 +2950,12 @@
           }
         });
 
-        // Fade out without expensive filter:blur
+        // Fade out instantly
         tl.to(
           currentSlide,
           {
             opacity: 0,
-            duration: 0.5,
+            duration: 0.1,
             ease: "power2.in",
           },
           0,
@@ -2909,10 +2967,10 @@
           { opacity: 0 },
           {
             opacity: 1,
-            duration: 0.6,
+            duration: 0.1,
             ease: "power2.out",
           },
-          0.3,
+          0.05,
         );
 
         const children = nextSlide.querySelectorAll(
@@ -2925,11 +2983,11 @@
             {
               y: 0,
               opacity: 1,
-              stagger: 0.04,
-              duration: 0.5,
+              stagger: 0.01,
+              duration: 0.15,
               ease: "power2.out",
             },
-            0.35,
+            0.1,
           );
         }
       }
@@ -2944,21 +3002,53 @@
 
       window.addEventListener("keydown", (e) => {
         if (state.isAnimating) return;
+        
+        // Forward commands: Right/Down, Space, PageDown, Enter, 'N' (Next), Clicker specific codes like F5/Shift+F5 or media keys if somehow mapped
         if (
           (e.key === "ArrowRight" ||
             e.key === "ArrowDown" ||
-            e.code === "Space") &&
+            e.code === "Space" ||
+            e.key === "PageDown" ||
+            e.key === "Enter" ||
+            e.key === "n" ||
+            e.key === "N") &&
           state.current < state.total - 1
-        )
+        ) {
+          e.preventDefault();
           changeSlide(state.current + 1);
-        if ((e.key === "ArrowLeft" || e.key === "ArrowUp") && state.current > 0)
+        }
+          
+        // Backward commands: Left/Up, PageUp, Backspace, 'P' (Previous)
+        if (
+          (e.key === "ArrowLeft" || 
+           e.key === "ArrowUp" || 
+           e.key === "PageUp" ||
+           e.key === "Backspace" ||
+           e.key === "p" ||
+           e.key === "P") && 
+          state.current > 0
+        ) {
+          e.preventDefault();
           changeSlide(state.current - 1);
+        }
       });
 
+      // Quick fix for some older clickers simulating mouse clicks. Left click anywhere on background = next slide.
+      // We attach to the main wrapper to avoid overriding specific button clicks if any existed.
+      document.querySelector(".presentation").addEventListener("click", (e) => {
+        // Only trigger if clicking directly on a slide or generic container, not on specific controls like dots
+        if(e.target.closest('.t-point')) return;
+        
+        if (!state.isAnimating && state.current < state.total - 1) {
+             changeSlide(state.current + 1);
+        }
+      });
+
+      // Ensure first slide is immediately active without long entrance animation
       gsap.fromTo(
         ".slide.active > *",
-        { y: 50, opacity: 0 },
-        { y: 0, opacity: 1, stagger: 0.1, duration: 1.2 },
+        { y: 20, opacity: 0 },
+        { y: 0, opacity: 1, stagger: 0.05, duration: 0.3 },
       );
 
       // Initialize Lucide icons
