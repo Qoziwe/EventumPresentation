@@ -77,10 +77,10 @@
       .orb {
         position: absolute;
         border-radius: 50%;
-        filter: blur(70px);
-        opacity: 0.45;
+        filter: blur(120px);
+        opacity: 0.40;
         mix-blend-mode: screen;
-        will-change: transform;
+        will-change: transform, background-color;
         transform: translateZ(0);
       }
 
@@ -966,7 +966,7 @@
       <div
         class="orb"
         style="
-          background: radial-gradient(circle, #2e5cff, transparent 65%);
+          background-color: #2e5cff;
           width: 70vw;
           height: 70vw;
           top: 10%;
@@ -976,7 +976,7 @@
       <div
         class="orb"
         style="
-          background: radial-gradient(circle, #9d4edd, transparent 65%);
+          background-color: #9d4edd;
           width: 60vw;
           height: 60vw;
           bottom: 10%;
@@ -986,7 +986,7 @@
       <div
         class="orb"
         style="
-          background: radial-gradient(circle, #06b6d4, transparent 65%);
+          background-color: #06b6d4;
           width: 50vw;
           height: 50vw;
           top: 40%;
@@ -2866,8 +2866,8 @@
         state.orbs.forEach((orb, i) => {
           const color = colors[i % colors.length];
           gsap.to(orb, {
-            background: `radial-gradient(circle, ${color}, transparent 65%)`,
-            duration: 2.0,
+            backgroundColor: color,
+            duration: 1.5,
             ease: "power2.inOut",
           });
         });
@@ -2879,16 +2879,30 @@
       // --- SLOW DRIFT (low-frequency, GPU-only transform) ---
       function animateBackground(warp = false) {
         state.orbs.forEach((orb, i) => {
-          const x = (Math.random() - 0.5) * 20;
-          const y = (Math.random() - 0.5) * 20;
+          const x = (Math.random() - 0.5) * 30; // Increased movement range
+          const y = (Math.random() - 0.5) * 30;
           if (warp) {
+            // Swoop to a new position on slide change, then resume infinite drift
             gsap.to(orb, {
               x: x * 1.5 + "%",
               y: y * 1.5 + "%",
-              duration: 1.0,
+              duration: 1.5,
               ease: "power2.inOut",
+              onComplete: () => {
+                const nx = (Math.random() - 0.5) * 25;
+                const ny = (Math.random() - 0.5) * 25;
+                gsap.to(orb, {
+                  x: nx + "%",
+                  y: ny + "%",
+                  duration: 20 + i * 5,
+                  repeat: -1,
+                  yoyo: true,
+                  ease: "sine.inOut",
+                });
+              }
             });
           } else {
+            // Initial organic drift
             gsap.to(orb, {
               x: x + "%",
               y: y + "%",
