@@ -307,11 +307,12 @@
 
     /* --- GRIDS & COMPONENTS --- */
     .grid-team {
-      display: grid;
-      grid-template-columns: repeat(5, 1fr);
-      gap: 20px;
-      width: 100%;
-    }
+        display: grid;
+        grid-template-columns: repeat(3, calc(20% - 16px));
+        justify-content: center;
+        gap: 20px;
+        width: 100%;
+      }
 
     .grid-3 {
       display: grid;
@@ -1071,34 +1072,7 @@
     <section class="slide">
       <h2>Project Team</h2>
       <div class="grid-team">
-        <div class="glass-panel team-card" style="border-top: 3px solid var(--accent-gold); overflow: hidden">
-          <div style="
-                position: absolute;
-                right: -20px;
-                top: -10px;
-                font-size: 80px;
-                font-weight: 900;
-                color: var(--accent-gold);
-                opacity: 0.05;
-                pointer-events: none;
-              ">
-            CEO
-          </div>
-          <div style="position: relative; z-index: 2">
-            <h3>Kamil Kadyrov</h3>
-            <div class="team-avatar" style="
-                  background-image: url(&quot;../photos/IMG_7166.webp&quot;);
-                  background-size: cover;
-                  background-position: center;
-                "></div>
-            <div class="role" style="color: var(--accent-gold)">
-              Captain, Coordinator
-            </div>
-          </div>
-          <div class="team-desc" style="position: relative; z-index: 2">
-            Strategy, management, platform operations.
-          </div>
-        </div>
+        
         <div class="glass-panel team-card" style="border-top: 3px solid #ec4899; overflow: hidden">
           <div style="
                 position: absolute;
@@ -1181,32 +1155,7 @@
             UI development, marketing support, coordination.
           </div>
         </div>
-        <div class="glass-panel team-card" style="border-top: 3px solid #3b82f6; overflow: hidden">
-          <div style="
-                position: absolute;
-                right: -20px;
-                top: -10px;
-                font-size: 80px;
-                font-weight: 900;
-                color: #3b82f6;
-                opacity: 0.05;
-                pointer-events: none;
-              ">
-            DEV
-          </div>
-          <div style="position: relative; z-index: 2">
-            <h3>Miron Maksimenko</h3>
-            <div class="team-avatar" style="
-                  background-image: url(&quot;../photos/IMG_20260219_225657.jpg&quot;);
-                  background-size: cover;
-                  background-position: center;
-                "></div>
-            <div class="role" style="color: #3b82f6">Developer</div>
-          </div>
-          <div class="team-desc" style="position: relative; z-index: 2">
-            Code maintenance, Fullstack tasks, 1C integrations.
-          </div>
-        </div>
+        
       </div>
     </section>
 
