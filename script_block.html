@@ -1,0 +1,289 @@
+    <script>
+      const slides = document.querySelectorAll(".slide");
+
+      const state = {
+        current: 0,
+        total: slides.length,
+        isAnimating: false,
+        orbs: document.querySelectorAll(".orb"),
+      };
+
+      const dotsContainer = document.getElementById("dots-container");
+      const progressLine = document.getElementById("progress-line");
+
+      // --- INIT TIMELINE ---
+      function initTimeline() {
+        slides.forEach((_, i) => {
+          const point = document.createElement("div");
+          point.className = `t-point ${i === 0 ? "active" : ""}`;
+          point.innerHTML = `<div class="t-dot"></div>`;
+          point.addEventListener("click", () => changeSlide(i));
+          dotsContainer.appendChild(point);
+        });
+      }
+      initTimeline();
+      // Hide QR initially
+      document.querySelector(".qr-widget").classList.add("hidden");
+
+      // --- SLIDE COLOR PALETTES FOR SMOOTH BACKGROUND TRANSITIONS ---
+      const slideColors = [
+        // Slide 0: Cover - deep blue/violet
+        ["#2e5cff", "#9d4edd", "#06b6d4", "#fbbf24", "#ec4899"],
+        // Slide 1: Team - warm purple/cyan
+        ["#7c3aed", "#06b6d4", "#3b82f6", "#f59e0b", "#a855f7"],
+        // Slide 2: Vision - violet/gold/cyan
+        ["#8b5cf6", "#fbbf24", "#06b6d4", "#d946ef", "#6366f1"],
+        // Slide 3: B2C Pain - blue/electric
+        ["#2563eb", "#7c3aed", "#0ea5e9", "#f97316", "#6366f1"],
+        // Slide 3: B2B Pain - red/warm
+        ["#dc2626", "#f59e0b", "#8b5cf6", "#06b6d4", "#ef4444"],
+        // Slide 4: Target Audience - purple/cyan
+        ["#7c3aed", "#1e1b4b", "#06b6d4", "#1e3a8a", "#4c1d95"],
+        // Slide 5: Market - gold/amber
+        ["#f59e0b", "#3b82f6", "#10b981", "#8b5cf6", "#fbbf24"],
+        // Slide 5: Competitors - lime/blue
+        ["#84cc16", "#3b82f6", "#8b5cf6", "#06b6d4", "#22c55e"],
+        // Slide 6: Monetization - cyan/gold
+        ["#06b6d4", "#fbbf24", "#3b82f6", "#8b5cf6", "#0ea5e9"],
+        // Slide 7: Interface (Home) - violet/pink
+        ["#8b5cf6", "#ec4899", "#3b82f6", "#06b6d4", "#a855f7"],
+        // Slide 7b: Interface (Social) - cyan/violet
+        ["#06b6d4", "#8b5cf6", "#3b82f6", "#ec4899", "#14b8a6"],
+        // Slide 7c: Interface (Creator) - gold/blue
+        ["#fbbf24", "#3b82f6", "#8b5cf6", "#06b6d4", "#f59e0b"],
+        // Slide 7d: Interface (Subscriptions) - lime/cyan
+        ["#bef264", "#06b6d4", "#3b82f6", "#8b5cf6", "#84cc16"],
+        // Slide 8: Security - deep blue/trust
+        ["#1e40af", "#3b82f6", "#1e3a8a", "#0ea5e9", "#1d4ed8"],
+        // Slide 9: Marketing - green/blue
+        ["#10b981", "#3b82f6", "#fbbf24", "#8b5cf6", "#14b8a6"],
+        // Slide 9: Finance - gold/deep
+        ["#fbbf24", "#f59e0b", "#3b82f6", "#8b5cf6", "#eab308"],
+        // Slide 10B: Pessimistic Revenue - green/gold
+        ["#10b981", "#fbbf24", "#3b82f6", "#06b6d4", "#22c55e"],
+        // Slide 10: Roadmap - blue/cyan
+        ["#3b82f6", "#06b6d4", "#8b5cf6", "#10b981", "#2563eb"],
+        // Slide 11: Risks - red/dark
+        ["#ef4444", "#f59e0b", "#8b5cf6", "#dc2626", "#f87171"],
+        // Slide 12: Farewell - vibrant mix
+        ["#ffffff", "#2e5cff", "#ec4899", "#fbbf24", "#06b6d4"],
+      ];
+
+      // --- BACKGROUND COLOR TRANSITION (slide change only, no interval) ---
+      function transitionBackgroundColors(slideIndex) {
+        const colors = slideColors[slideIndex] || slideColors[0];
+        state.orbs.forEach((orb, i) => {
+          const color = colors[i % colors.length];
+          gsap.to(orb, {
+            backgroundColor: color,
+            duration: 1.5,
+            ease: "power2.inOut",
+            overwrite: "auto",
+          });
+        });
+      }
+
+      // Set initial orb colors
+      transitionBackgroundColors(0);
+
+      // --- SLOW DRIFT (low-frequency, GPU-only transform) ---
+      function animateBackground(warp = false) {
+        state.orbs.forEach((orb, i) => {
+          // Kill existing position tweens to prevent tween accumulation
+          gsap.killTweensOf(orb, "x,y");
+
+          const x = (Math.random() - 0.5) * 25;
+          const y = (Math.random() - 0.5) * 25;
+          if (warp) {
+            gsap.to(orb, {
+              x: x * 1.5 + "%",
+              y: y * 1.5 + "%",
+              duration: 1.5,
+              ease: "power2.inOut",
+              onComplete: () => {
+                const nx = (Math.random() - 0.5) * 20;
+                const ny = (Math.random() - 0.5) * 20;
+                gsap.to(orb, {
+                  x: nx + "%",
+                  y: ny + "%",
+                  duration: 25 + i * 8,
+                  repeat: -1,
+                  yoyo: true,
+                  ease: "sine.inOut",
+                });
+              },
+            });
+          } else {
+            gsap.to(orb, {
+              x: x + "%",
+              y: y + "%",
+              duration: 25 + i * 8,
+              repeat: -1,
+              yoyo: true,
+              ease: "sine.inOut",
+            });
+          }
+        });
+      }
+      animateBackground();
+
+      // --- SLIDE TRANSITION ---
+      function changeSlide(index) {
+        if (state.isAnimating || index === state.current) return;
+        state.isAnimating = true;
+
+        const currentSlide = slides[state.current];
+        const nextSlide = slides[index];
+
+        // Hide QR on cover slide (index 0), show on others
+        const qrWidget = document.querySelector(".qr-widget");
+        if (index === 0) {
+          qrWidget.classList.add("hidden");
+        } else {
+          qrWidget.classList.remove("hidden");
+        }
+
+        animateBackground(true);
+        transitionBackgroundColors(index);
+
+        document
+          .querySelectorAll(".t-point")
+          .forEach((d, i) => d.classList.toggle("active", i === index));
+        const p = index / Math.max(1, state.total - 1);
+        progressLine.style.width = `calc(${p * 100}% - ${p * 30}px)`;
+
+        const tl = gsap.timeline({
+          onComplete: () => {
+            currentSlide.classList.remove("active");
+            // Pause video on inactive slide (cleanup)
+            currentSlide.querySelectorAll("video").forEach((v) => v.pause());
+            state.current = index;
+            state.isAnimating = false;
+          },
+        });
+
+        // --- VIDEO LOGIC: RESET & PLAY IMMEDIATELY ---
+        // This ensures the video is ready and playing from 0:00 as soon as the slide starts fading in
+        nextSlide.querySelectorAll("video").forEach((v) => {
+          v.currentTime = 0;
+          v.load(); // Force reload to ensure frame 0 is ready
+          var playPromise = v.play();
+          if (playPromise !== undefined) {
+            playPromise.catch((_) => {
+              /* Auto-play prevented */
+            });
+          }
+        });
+
+        // Fade out instantly
+        tl.to(
+          currentSlide,
+          {
+            opacity: 0,
+            duration: 0.1,
+            ease: "power2.in",
+          },
+          0,
+        );
+
+        nextSlide.classList.add("active");
+        tl.fromTo(
+          nextSlide,
+          { opacity: 0 },
+          {
+            opacity: 1,
+            duration: 0.1,
+            ease: "power2.out",
+          },
+          0.05,
+        );
+
+        const children = nextSlide.querySelectorAll(
+          "h1, h2, p, .glass-panel, .rm-step",
+        );
+        if (children.length) {
+          tl.fromTo(
+            children,
+            { y: 20, opacity: 0 },
+            {
+              y: 0,
+              opacity: 1,
+              stagger: 0.01,
+              duration: 0.15,
+              ease: "power2.out",
+            },
+            0.1,
+          );
+        }
+      }
+
+      // --- CONTROLS ---
+      let lastWheelTime = 0;
+      window.addEventListener(
+        "wheel",
+        (e) => {
+          if (state.isAnimating) return;
+          const now = Date.now();
+          if (now - lastWheelTime < 300) return; // throttle trackpad
+          lastWheelTime = now;
+          if (e.deltaY > 0 && state.current < state.total - 1)
+            changeSlide(state.current + 1);
+          if (e.deltaY < 0 && state.current > 0) changeSlide(state.current - 1);
+        },
+        { passive: true },
+      );
+
+      window.addEventListener("keydown", (e) => {
+        if (state.isAnimating) return;
+
+        // Forward commands: Right/Down, Space, PageDown, Enter, 'N' (Next), Clicker specific codes like F5/Shift+F5 or media keys if somehow mapped
+        if (
+          (e.key === "ArrowRight" ||
+            e.key === "ArrowDown" ||
+            e.code === "Space" ||
+            e.key === "PageDown" ||
+            e.key === "Enter" ||
+            e.key === "n" ||
+            e.key === "N") &&
+          state.current < state.total - 1
+        ) {
+          e.preventDefault();
+          changeSlide(state.current + 1);
+        }
+
+        // Backward commands: Left/Up, PageUp, Backspace, 'P' (Previous)
+        if (
+          (e.key === "ArrowLeft" ||
+            e.key === "ArrowUp" ||
+            e.key === "PageUp" ||
+            e.key === "Backspace" ||
+            e.key === "p" ||
+            e.key === "P") &&
+          state.current > 0
+        ) {
+          e.preventDefault();
+          changeSlide(state.current - 1);
+        }
+      });
+
+      // Quick fix for some older clickers simulating mouse clicks. Left click anywhere on background = next slide.
+      // We attach to the main wrapper to avoid overriding specific button clicks if any existed.
+      document.querySelector(".presentation").addEventListener("click", (e) => {
+        // Only trigger if clicking directly on a slide or generic container, not on specific controls like dots
+        if (e.target.closest(".t-point")) return;
+
+        if (!state.isAnimating && state.current < state.total - 1) {
+          changeSlide(state.current + 1);
+        }
+      });
+
+      // Ensure first slide is immediately active without long entrance animation
+      gsap.fromTo(
+        ".slide.active > *",
+        { y: 20, opacity: 0 },
+        { y: 0, opacity: 1, stagger: 0.05, duration: 0.3 },
+      );
+
+      // Initialize Lucide icons
+      lucide.createIcons();
+    </script>

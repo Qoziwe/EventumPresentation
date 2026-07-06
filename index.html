@@ -65,22 +65,22 @@
       /* --- BACKGROUND ENGINE (NO NOISE) --- */
       .ambient-canvas {
         position: fixed;
-        top: -50%;
-        left: -50%;
-        width: 200%;
-        height: 200%;
+        top: -25%;
+        left: -25%;
+        width: 150%;
+        height: 150%;
         z-index: -10;
         background: #000;
         overflow: hidden;
+        contain: layout style;
       }
 
       .orb {
         position: absolute;
         border-radius: 50%;
-        filter: blur(120px);
-        opacity: 0.40;
-        mix-blend-mode: screen;
-        will-change: transform, background-color;
+        filter: blur(80px);
+        opacity: 0.35;
+        will-change: transform;
         transform: translateZ(0);
       }
 
@@ -105,8 +105,6 @@
         position: relative;
         width: 100vw;
         height: 100vh;
-        perspective: 1500px;
-        transform-style: preserve-3d;
         overflow: hidden;
       }
 
@@ -121,12 +119,18 @@
         pointer-events: none;
         transform: translateZ(0);
         transition: opacity 0.5s ease;
+        visibility: hidden;
+        content-visibility: auto;
+        contain: layout style paint;
       }
 
       .slide.active {
         opacity: 1;
         pointer-events: auto;
         z-index: 5;
+        visibility: visible;
+        content-visibility: visible;
+        contain: layout style;
       }
 
       /* --- Glass Panels (perf-optimized) --- */
@@ -139,17 +143,15 @@
           rgba(255, 255, 255, 0.04) 60%,
           rgba(255, 255, 255, 0.01) 100%
         );
-        backdrop-filter: blur(12px) saturate(150%);
-        -webkit-backdrop-filter: blur(12px) saturate(150%);
+        backdrop-filter: blur(8px);
+        -webkit-backdrop-filter: blur(8px);
         border: 1px solid var(--glass-border);
         border-radius: 24px;
         padding: 32px;
         overflow: hidden;
-        isolation: isolate;
         box-shadow:
           0 8px 32px rgba(0, 0, 0, 0.3),
           0 1px 0 rgba(255, 255, 255, 0.15) inset;
-        will-change: auto;
       }
 
       /* Specular highlight layer */
@@ -169,36 +171,33 @@
         border-radius: 24px 24px 0 0;
         pointer-events: none;
         z-index: 1;
-        transition: opacity 0.6s var(--ease-liquid);
       }
 
-      /* Chromatic dispersion + caustic edge glow */
+      /* Chromatic edge glow — simplified border-image for performance */
       .glass-panel::after {
         content: "";
         position: absolute;
-        inset: -1px;
-        border-radius: 25px;
+        inset: 0;
+        border-radius: 24px;
+        border: 1.5px solid transparent;
         background: linear-gradient(
-          135deg,
-          var(--glass-edge-cyan) 0%,
-          transparent 25%,
-          transparent 50%,
-          var(--glass-edge-magenta) 75%,
-          rgba(251, 191, 36, 0.08) 100%
-        );
-        mask:
-          linear-gradient(#fff 0 0) content-box,
-          linear-gradient(#fff 0 0);
+            135deg,
+            var(--glass-edge-cyan) 0%,
+            transparent 25%,
+            transparent 50%,
+            var(--glass-edge-magenta) 75%,
+            rgba(251, 191, 36, 0.08) 100%
+          )
+          border-box;
         -webkit-mask:
-          linear-gradient(#fff 0 0) content-box,
-          linear-gradient(#fff 0 0);
-        mask-composite: xor;
-        -webkit-mask-composite: xor;
-        padding: 1.5px;
+          linear-gradient(transparent 0 0) padding-box,
+          linear-gradient(#fff 0 0) border-box;
+        mask:
+          linear-gradient(transparent 0 0) padding-box,
+          linear-gradient(#fff 0 0) border-box;
         pointer-events: none;
         z-index: 2;
         opacity: 0.7;
-        transition: opacity 0.6s var(--ease-liquid);
       }
 
       /* --- TYPOGRAPHY --- */
@@ -557,6 +556,7 @@
         opacity: 0;
         pointer-events: none;
         transform: translateY(-20px);
+        animation-play-state: paused;
       }
       .qr-widget img {
         border-radius: 10px;
@@ -931,7 +931,14 @@
       }
       .insta-qr-container {
         padding: 12px;
-        background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
+        background: linear-gradient(
+          45deg,
+          #f09433 0%,
+          #e6683c 25%,
+          #dc2743 50%,
+          #cc2366 75%,
+          #bc1888 100%
+        );
         border-radius: 24px;
         box-shadow: 0 10px 40px rgba(220, 39, 67, 0.3);
         position: relative;
@@ -955,7 +962,7 @@
         display: flex;
         align-items: center;
         gap: 8px;
-        text-shadow: 0 2px 10px rgba(0,0,0,0.5);
+        text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
       }
     </style>
   </head>
@@ -968,8 +975,8 @@
         class="orb"
         style="
           background-color: #2e5cff;
-          width: 70vw;
-          height: 70vw;
+          width: 50vw;
+          height: 50vw;
           top: 10%;
           left: 10%;
         "
@@ -978,8 +985,8 @@
         class="orb"
         style="
           background-color: #9d4edd;
-          width: 60vw;
-          height: 60vw;
+          width: 45vw;
+          height: 45vw;
           bottom: 10%;
           right: 10%;
         "
@@ -988,8 +995,8 @@
         class="orb"
         style="
           background-color: #06b6d4;
-          width: 50vw;
-          height: 50vw;
+          width: 40vw;
+          height: 40vw;
           top: 40%;
           right: 30%;
         "
@@ -1032,7 +1039,6 @@
       <section class="slide">
         <h2>Команда Проекта</h2>
         <div class="grid-team">
-
           <div
             class="glass-panel team-card"
             style="border-top: 3px solid #ec4899; overflow: hidden"
@@ -1139,7 +1145,6 @@
               Разработка интерфейсов, помощь в маркетинге, координация.
             </div>
           </div>
-
         </div>
       </section>
 
@@ -1816,6 +1821,7 @@
           <div class="phone-item">
             <div class="phone-frame">
               <img
+                loading="lazy"
                 src="./photos/interfaceImages/Screenshot_20260225_205914_eventum-mobile.jpg"
                 alt="Лента Для вас"
               />
@@ -1825,6 +1831,7 @@
           <div class="phone-item">
             <div class="phone-frame">
               <img
+                loading="lazy"
                 src="./photos/interfaceImages/Screenshot_20260225_205926_eventum-mobile.jpg"
                 alt="Популярное в городе"
               />
@@ -1834,6 +1841,7 @@
           <div class="phone-item">
             <div class="phone-frame">
               <img
+                loading="lazy"
                 src="./photos/interfaceImages/Screenshot_20260225_210018_eventum-mobile.jpg"
                 alt="Поиск и фильтры"
               />
@@ -1854,6 +1862,7 @@
           <div class="phone-item">
             <div class="phone-frame">
               <img
+                loading="lazy"
                 src="./photos/interfaceImages/Screenshot_20260225_210124_eventum-mobile.jpg"
                 alt="Обсуждения"
               />
@@ -1863,6 +1872,7 @@
           <div class="phone-item">
             <div class="phone-frame">
               <img
+                loading="lazy"
                 src="./photos/interfaceImages/Screenshot_20260225_221228_eventum-mobile.jpg"
                 alt="Мои авторы"
               />
@@ -1872,6 +1882,7 @@
           <div class="phone-item">
             <div class="phone-frame">
               <img
+                loading="lazy"
                 src="./photos/interfaceImages/Screenshot_20260225_221206_eventum-mobile.jpg"
                 alt="Профиль"
               />
@@ -1881,6 +1892,7 @@
           <div class="phone-item">
             <div class="phone-frame">
               <img
+                loading="lazy"
                 src="./photos/interfaceImages/Screenshot_20260225_221249_eventum-mobile.jpg"
                 alt="Мои билеты"
               />
@@ -1901,6 +1913,7 @@
           <div class="phone-item">
             <div class="phone-frame">
               <img
+                loading="lazy"
                 src="./photos/interfaceImages/Screenshot_20260225_212024_eventum-mobile.jpg"
                 alt="Creator Studio"
               />
@@ -1910,6 +1923,7 @@
           <div class="phone-item">
             <div class="phone-frame">
               <img
+                loading="lazy"
                 src="./photos/interfaceImages/Screenshot_20260225_212034_eventum-mobile.jpg"
                 alt="Создание мероприятия"
               />
@@ -1919,6 +1933,7 @@
           <div class="phone-item">
             <div class="phone-frame">
               <img
+                loading="lazy"
                 src="./photos/interfaceImages/Screenshot_20260225_212054_eventum-mobile.jpg"
                 alt="Аналитика"
               />
@@ -1939,6 +1954,7 @@
           <div class="phone-item">
             <div class="phone-frame">
               <img
+                loading="lazy"
                 src="./photos/interfaceImages/Screenshot_20260225_212120_eventum-mobile.jpg"
                 alt="Подписки"
               />
@@ -1948,6 +1964,7 @@
           <div class="phone-item">
             <div class="phone-frame">
               <img
+                loading="lazy"
                 src="./photos/interfaceImages/Screenshot_20260225_212138_eventum-mobile.jpg"
                 alt="Настройки профиля"
               />
@@ -1957,6 +1974,7 @@
           <div class="phone-item">
             <div class="phone-frame">
               <img
+                loading="lazy"
                 src="./photos/interfaceImages/Screenshot_20260225_221239_eventum-mobile.jpg"
                 alt="Сохранённые"
               />
@@ -2343,108 +2361,336 @@
       <!-- SLIDE 10B: PESSIMISTIC REVENUE -->
       <section class="slide">
         <h2>Наши доходы при пессимистичных расчетах</h2>
-        <div style="
-          display: grid;
-          grid-template-columns: repeat(3, 1fr);
-          gap: 16px;
-          width: 100%;
-          max-width: 1200px;
-          margin: 0 auto;
-        ">
+        <div
+          style="
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 16px;
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+          "
+        >
           <!-- Card 1: Средний чек -->
-          <div class="glass-panel" style="padding: 28px; display: flex; flex-direction: column; gap: 12px;">
-            <div style="
-              font-size: 14px;
-              font-weight: 800;
-              text-transform: uppercase;
-              letter-spacing: 1.5px;
-              color: var(--accent-gold);
-            ">СРЕДНИЙ ЧЕК</div>
-            <div style="font-size: 40px; font-weight: 800; color: var(--accent-gold); line-height: 1;">8 350 ₸</div>
-            <div style="font-size: 15px; color: #bbb; line-height: 1.5;">
-              (6.5 × 5 000 + 3 × 12 000 + 0.5 × 30 000) / 10<br>
+          <div
+            class="glass-panel"
+            style="
+              padding: 28px;
+              display: flex;
+              flex-direction: column;
+              gap: 12px;
+            "
+          >
+            <div
+              style="
+                font-size: 14px;
+                font-weight: 800;
+                text-transform: uppercase;
+                letter-spacing: 1.5px;
+                color: var(--accent-gold);
+              "
+            >
+              СРЕДНИЙ ЧЕК
+            </div>
+            <div
+              style="
+                font-size: 40px;
+                font-weight: 800;
+                color: var(--accent-gold);
+                line-height: 1;
+              "
+            >
+              8 350 ₸
+            </div>
+            <div style="font-size: 15px; color: #bbb; line-height: 1.5">
+              (6.5 × 5 000 + 3 × 12 000 + 0.5 × 30 000) / 10<br />
               = (32 500 + 36 000 + 15 000) / 10
             </div>
-            <div style="font-size: 18px; color: rgba(255,255,255,0.5); margin-top: auto;">на одного организатора в месяц</div>
+            <div
+              style="
+                font-size: 18px;
+                color: rgba(255, 255, 255, 0.5);
+                margin-top: auto;
+              "
+            >
+              на одного организатора в месяц
+            </div>
           </div>
 
           <!-- Card 2: 0.5% рынка билетов -->
-          <div class="glass-panel" style="padding: 28px; display: flex; flex-direction: column; gap: 12px;">
-            <div style="
-              font-size: 18px;
-              font-weight: 800;
-              text-transform: uppercase;
-              letter-spacing: 1.5px;
-              color: var(--accent-cyan);
-            ">0.5% РЫНКА АЛМАТЫ</div>
-            <div style="font-size: 16px; color: #bbb; line-height: 1.6;">
-              Из оборота <span style="color: #fff; font-weight: 700;">17 млрд ₸</span> — участвуем лишь в <span style="color: var(--accent-cyan); font-weight: 700;">0.5%</span>
+          <div
+            class="glass-panel"
+            style="
+              padding: 28px;
+              display: flex;
+              flex-direction: column;
+              gap: 12px;
+            "
+          >
+            <div
+              style="
+                font-size: 18px;
+                font-weight: 800;
+                text-transform: uppercase;
+                letter-spacing: 1.5px;
+                color: var(--accent-cyan);
+              "
+            >
+              0.5% РЫНКА АЛМАТЫ
             </div>
-            <div style="display: flex; gap: 16px; margin-top: 8px;">
-              <div style="flex: 1; padding: 14px; background: rgba(6,182,212,0.08); border-radius: 12px; border: 1px solid rgba(6,182,212,0.2);">
-                <div style="font-size: 13px; color: rgba(255,255,255,0.5);">Комиссия</div>
-                <div style="font-size: 22px; font-weight: 700; color: var(--accent-cyan);">2.125 млн ₸</div>
+            <div style="font-size: 16px; color: #bbb; line-height: 1.6">
+              Из оборота
+              <span style="color: #fff; font-weight: 700">17 млрд ₸</span> —
+              участвуем лишь в
+              <span style="color: var(--accent-cyan); font-weight: 700"
+                >0.5%</span
+              >
+            </div>
+            <div style="display: flex; gap: 16px; margin-top: 8px">
+              <div
+                style="
+                  flex: 1;
+                  padding: 14px;
+                  background: rgba(6, 182, 212, 0.08);
+                  border-radius: 12px;
+                  border: 1px solid rgba(6, 182, 212, 0.2);
+                "
+              >
+                <div style="font-size: 13px; color: rgba(255, 255, 255, 0.5)">
+                  Комиссия
+                </div>
+                <div
+                  style="
+                    font-size: 22px;
+                    font-weight: 700;
+                    color: var(--accent-cyan);
+                  "
+                >
+                  2.125 млн ₸
+                </div>
               </div>
-              <div style="flex: 1; padding: 14px; background: rgba(139,92,246,0.08); border-radius: 12px; border: 1px solid rgba(139,92,246,0.2);">
-                <div style="font-size: 13px; color: rgba(255,255,255,0.5);">Тарифы продвижения</div>
-                <div style="font-size: 22px; font-weight: 700; color: var(--accent-violet);">3 млн ₸</div>
+              <div
+                style="
+                  flex: 1;
+                  padding: 14px;
+                  background: rgba(139, 92, 246, 0.08);
+                  border-radius: 12px;
+                  border: 1px solid rgba(139, 92, 246, 0.2);
+                "
+              >
+                <div style="font-size: 13px; color: rgba(255, 255, 255, 0.5)">
+                  Тарифы продвижения
+                </div>
+                <div
+                  style="
+                    font-size: 22px;
+                    font-weight: 700;
+                    color: var(--accent-violet);
+                  "
+                >
+                  3 млн ₸
+                </div>
               </div>
             </div>
           </div>
 
           <!-- Card 3: 70-100 организаторов -->
-          <div class="glass-panel" style="padding: 28px; display: flex; flex-direction: column; gap: 12px;">
-            <div style="
-              font-size: 18px;
-              font-weight: 800;
-              text-transform: uppercase;
-              letter-spacing: 1.5px;
-              color: var(--accent-blue);
-            ">70–100 ОРГАНИЗАТОРОВ ЗА ПЕРВЫЙ ГОД</div>
-            <div style="font-size: 16px; color: #bbb; line-height: 1.6;">
-              Среднее количество организаторов, которые зарегистрируются на платформе в первый год работы
+          <div
+            class="glass-panel"
+            style="
+              padding: 28px;
+              display: flex;
+              flex-direction: column;
+              gap: 12px;
+            "
+          >
+            <div
+              style="
+                font-size: 18px;
+                font-weight: 800;
+                text-transform: uppercase;
+                letter-spacing: 1.5px;
+                color: var(--accent-blue);
+              "
+            >
+              70–100 ОРГАНИЗАТОРОВ ЗА ПЕРВЫЙ ГОД
+            </div>
+            <div style="font-size: 16px; color: #bbb; line-height: 1.6">
+              Среднее количество организаторов, которые зарегистрируются на
+              платформе в первый год работы
             </div>
           </div>
 
           <!-- Card 4: Покупают только 30 -->
-          <div class="glass-panel" style="padding: 28px; display: flex; flex-direction: column; gap: 12px;">
-            <div style="
-              font-size: 16px;
-              font-weight: 800;
-              text-transform: uppercase;
-              letter-spacing: 1.5px;
-              color: #ef4444;
-            ">ПОКУПАЮТ ТОЛЬКО 30 КАЖДЫЙ МЕСЯЦ</div>
-            <div style="font-size: 16px; color: #bbb; line-height: 1.6;">
-              Из 70–100 организаторов только <span style="color: #fff; font-weight: 700;">30</span> будут активно покупать подписки каждый месяц
+          <div
+            class="glass-panel"
+            style="
+              padding: 28px;
+              display: flex;
+              flex-direction: column;
+              gap: 12px;
+            "
+          >
+            <div
+              style="
+                font-size: 16px;
+                font-weight: 800;
+                text-transform: uppercase;
+                letter-spacing: 1.5px;
+                color: #ef4444;
+              "
+            >
+              ПОКУПАЮТ ТОЛЬКО 30 КАЖДЫЙ МЕСЯЦ
+            </div>
+            <div style="font-size: 16px; color: #bbb; line-height: 1.6">
+              Из 70–100 организаторов только
+              <span style="color: #fff; font-weight: 700">30</span> будут
+              активно покупать подписки каждый месяц
             </div>
           </div>
 
           <!-- Card 5: Соотношение уровней подписок -->
-          <div class="glass-panel" style="padding: 28px; display: flex; flex-direction: column; gap: 12px; grid-column: span 2;">
-            <div style="
-              font-size: 16px;
-              font-weight: 800;
-              text-transform: uppercase;
-              letter-spacing: 1.5px;
-              color: var(--accent-lime);
-            ">СООТНОШЕНИЕ УРОВНЯ ПОДПИСОК (6.5 :: 3 :: 0.5 :: >0.1)</div>
-            <div style="display: flex; gap: 14px; flex-wrap: wrap;">
-              <div style="flex: 1; min-width: 120px; padding: 14px; background: rgba(59,130,246,0.08); border-radius: 12px; border: 1px solid rgba(59,130,246,0.2); text-align: center;">
-                <div style="font-size: 24px; font-weight: 800; color: var(--accent-blue);">6.5</div>
-                <div style="font-size: 14px; color: rgba(255,255,255,0.5); margin-top: 4px;">Уровень 1 — 5 000 ₸</div>
+          <div
+            class="glass-panel"
+            style="
+              padding: 28px;
+              display: flex;
+              flex-direction: column;
+              gap: 12px;
+              grid-column: span 2;
+            "
+          >
+            <div
+              style="
+                font-size: 16px;
+                font-weight: 800;
+                text-transform: uppercase;
+                letter-spacing: 1.5px;
+                color: var(--accent-lime);
+              "
+            >
+              СООТНОШЕНИЕ УРОВНЯ ПОДПИСОК (6.5 :: 3 :: 0.5 :: >0.1)
+            </div>
+            <div style="display: flex; gap: 14px; flex-wrap: wrap">
+              <div
+                style="
+                  flex: 1;
+                  min-width: 120px;
+                  padding: 14px;
+                  background: rgba(59, 130, 246, 0.08);
+                  border-radius: 12px;
+                  border: 1px solid rgba(59, 130, 246, 0.2);
+                  text-align: center;
+                "
+              >
+                <div
+                  style="
+                    font-size: 24px;
+                    font-weight: 800;
+                    color: var(--accent-blue);
+                  "
+                >
+                  6.5
+                </div>
+                <div
+                  style="
+                    font-size: 14px;
+                    color: rgba(255, 255, 255, 0.5);
+                    margin-top: 4px;
+                  "
+                >
+                  Уровень 1 — 5 000 ₸
+                </div>
               </div>
-              <div style="flex: 1; min-width: 120px; padding: 14px; background: rgba(139,92,246,0.08); border-radius: 12px; border: 1px solid rgba(139,92,246,0.2); text-align: center;">
-                <div style="font-size: 24px; font-weight: 800; color: var(--accent-violet);">3</div>
-                <div style="font-size: 14px; color: rgba(255,255,255,0.5); margin-top: 4px;">Уровень 2 — 12 000 ₸</div>
+              <div
+                style="
+                  flex: 1;
+                  min-width: 120px;
+                  padding: 14px;
+                  background: rgba(139, 92, 246, 0.08);
+                  border-radius: 12px;
+                  border: 1px solid rgba(139, 92, 246, 0.2);
+                  text-align: center;
+                "
+              >
+                <div
+                  style="
+                    font-size: 24px;
+                    font-weight: 800;
+                    color: var(--accent-violet);
+                  "
+                >
+                  3
+                </div>
+                <div
+                  style="
+                    font-size: 14px;
+                    color: rgba(255, 255, 255, 0.5);
+                    margin-top: 4px;
+                  "
+                >
+                  Уровень 2 — 12 000 ₸
+                </div>
               </div>
-              <div style="flex: 1; min-width: 120px; padding: 14px; background: rgba(6,182,212,0.08); border-radius: 12px; border: 1px solid rgba(6,182,212,0.2); text-align: center;">
-                <div style="font-size: 24px; font-weight: 800; color: var(--accent-cyan);">0.5</div>
-                <div style="font-size: 14px; color: rgba(255,255,255,0.5); margin-top: 4px;">Уровень 3 — 30 000 ₸</div>
+              <div
+                style="
+                  flex: 1;
+                  min-width: 120px;
+                  padding: 14px;
+                  background: rgba(6, 182, 212, 0.08);
+                  border-radius: 12px;
+                  border: 1px solid rgba(6, 182, 212, 0.2);
+                  text-align: center;
+                "
+              >
+                <div
+                  style="
+                    font-size: 24px;
+                    font-weight: 800;
+                    color: var(--accent-cyan);
+                  "
+                >
+                  0.5
+                </div>
+                <div
+                  style="
+                    font-size: 14px;
+                    color: rgba(255, 255, 255, 0.5);
+                    margin-top: 4px;
+                  "
+                >
+                  Уровень 3 — 30 000 ₸
+                </div>
               </div>
-              <div style="flex: 1; min-width: 120px; padding: 14px; background: rgba(255,255,255,0.04); border-radius: 12px; border: 1px solid rgba(255,255,255,0.1); text-align: center;">
-                <div style="font-size: 24px; font-weight: 800; color: rgba(255,255,255,0.3);">&gt;0.1</div>
-                <div style="font-size: 14px; color: rgba(255,255,255,0.3); margin-top: 4px;">Уровень 4 — не учитывается</div>
+              <div
+                style="
+                  flex: 1;
+                  min-width: 120px;
+                  padding: 14px;
+                  background: rgba(255, 255, 255, 0.04);
+                  border-radius: 12px;
+                  border: 1px solid rgba(255, 255, 255, 0.1);
+                  text-align: center;
+                "
+              >
+                <div
+                  style="
+                    font-size: 24px;
+                    font-weight: 800;
+                    color: rgba(255, 255, 255, 0.3);
+                  "
+                >
+                  &gt;0.1
+                </div>
+                <div
+                  style="
+                    font-size: 14px;
+                    color: rgba(255, 255, 255, 0.3);
+                    margin-top: 4px;
+                  "
+                >
+                  Уровень 4 — не учитывается
+                </div>
               </div>
             </div>
           </div>
@@ -2652,7 +2898,12 @@
           </p>
           <div class="insta-qr-wrapper">
             <div class="insta-qr-container">
-              <img src="https://api.qrserver.com/v1/create-qr-code/?size=160x160&bgcolor=ffffff&color=000000&margin=2&data=https://www.instagram.com/eventumtm?igsh=MThxdTV5eWc4Njg1aQ%3D%3D&utm_source=qr" alt="Instagram QR" width="160" height="160">
+              <img
+                src="https://api.qrserver.com/v1/create-qr-code/?size=160x160&bgcolor=ffffff&color=000000&margin=2&data=https://www.instagram.com/eventumtm?igsh=MThxdTV5eWc4Njg1aQ%3D%3D&utm_source=qr"
+                alt="Instagram QR"
+                width="160"
+                height="160"
+              />
             </div>
             <div class="insta-label">
               <i data-lucide="instagram"></i>
@@ -2763,36 +3014,6 @@
         ["#ffffff", "#2e5cff", "#ec4899", "#fbbf24", "#06b6d4"],
       ];
 
-      // Convert hex to HSL for smooth manipulation
-      function hexToHSL(hex) {
-        let r = parseInt(hex.slice(1, 3), 16) / 255;
-        let g = parseInt(hex.slice(3, 5), 16) / 255;
-        let b = parseInt(hex.slice(5, 7), 16) / 255;
-        const max = Math.max(r, g, b),
-          min = Math.min(r, g, b);
-        let h,
-          s,
-          l = (max + min) / 2;
-        if (max === min) {
-          h = s = 0;
-        } else {
-          const d = max - min;
-          s = l > 0.5 ? d / (2 - max - min) : d / (max + min);
-          switch (max) {
-            case r:
-              h = ((g - b) / d + (g < b ? 6 : 0)) / 6;
-              break;
-            case g:
-              h = ((b - r) / d + 2) / 6;
-              break;
-            case b:
-              h = ((r - g) / d + 4) / 6;
-              break;
-          }
-        }
-        return { h: h * 360, s: s * 100, l: l * 100 };
-      }
-
       // --- BACKGROUND COLOR TRANSITION (slide change only, no interval) ---
       function transitionBackgroundColors(slideIndex) {
         const colors = slideColors[slideIndex] || slideColors[0];
@@ -2802,6 +3023,7 @@
             backgroundColor: color,
             duration: 1.5,
             ease: "power2.inOut",
+            overwrite: "auto",
           });
         });
       }
@@ -2812,34 +3034,35 @@
       // --- SLOW DRIFT (low-frequency, GPU-only transform) ---
       function animateBackground(warp = false) {
         state.orbs.forEach((orb, i) => {
-          const x = (Math.random() - 0.5) * 30; // Increased movement range
-          const y = (Math.random() - 0.5) * 30;
+          // Kill existing position tweens to prevent tween accumulation
+          gsap.killTweensOf(orb, "x,y");
+
+          const x = (Math.random() - 0.5) * 25;
+          const y = (Math.random() - 0.5) * 25;
           if (warp) {
-            // Swoop to a new position on slide change, then resume infinite drift
             gsap.to(orb, {
               x: x * 1.5 + "%",
               y: y * 1.5 + "%",
               duration: 1.5,
               ease: "power2.inOut",
               onComplete: () => {
-                const nx = (Math.random() - 0.5) * 25;
-                const ny = (Math.random() - 0.5) * 25;
+                const nx = (Math.random() - 0.5) * 20;
+                const ny = (Math.random() - 0.5) * 20;
                 gsap.to(orb, {
                   x: nx + "%",
                   y: ny + "%",
-                  duration: 20 + i * 5,
+                  duration: 25 + i * 8,
                   repeat: -1,
                   yoyo: true,
                   ease: "sine.inOut",
                 });
-              }
+              },
             });
           } else {
-            // Initial organic drift
             gsap.to(orb, {
               x: x + "%",
               y: y + "%",
-              duration: 20 + i * 5,
+              duration: 25 + i * 8,
               repeat: -1,
               yoyo: true,
               ease: "sine.inOut",
@@ -2940,12 +3163,20 @@
       }
 
       // --- CONTROLS ---
-      window.addEventListener("wheel", (e) => {
-        if (state.isAnimating) return;
-        if (e.deltaY > 0 && state.current < state.total - 1)
-          changeSlide(state.current + 1);
-        if (e.deltaY < 0 && state.current > 0) changeSlide(state.current - 1);
-      });
+      let lastWheelTime = 0;
+      window.addEventListener(
+        "wheel",
+        (e) => {
+          if (state.isAnimating) return;
+          const now = Date.now();
+          if (now - lastWheelTime < 300) return; // throttle trackpad
+          lastWheelTime = now;
+          if (e.deltaY > 0 && state.current < state.total - 1)
+            changeSlide(state.current + 1);
+          if (e.deltaY < 0 && state.current > 0) changeSlide(state.current - 1);
+        },
+        { passive: true },
+      );
 
       window.addEventListener("keydown", (e) => {
         if (state.isAnimating) return;
@@ -2968,11 +3199,11 @@
         // Backward commands: Left/Up, PageUp, Backspace, 'P' (Previous)
         if (
           (e.key === "ArrowLeft" ||
-           e.key === "ArrowUp" ||
-           e.key === "PageUp" ||
-           e.key === "Backspace" ||
-           e.key === "p" ||
-           e.key === "P") &&
+            e.key === "ArrowUp" ||
+            e.key === "PageUp" ||
+            e.key === "Backspace" ||
+            e.key === "p" ||
+            e.key === "P") &&
           state.current > 0
         ) {
           e.preventDefault();
@@ -2984,10 +3215,10 @@
       // We attach to the main wrapper to avoid overriding specific button clicks if any existed.
       document.querySelector(".presentation").addEventListener("click", (e) => {
         // Only trigger if clicking directly on a slide or generic container, not on specific controls like dots
-        if(e.target.closest('.t-point')) return;
+        if (e.target.closest(".t-point")) return;
 
         if (!state.isAnimating && state.current < state.total - 1) {
-             changeSlide(state.current + 1);
+          changeSlide(state.current + 1);
         }
       });
 
